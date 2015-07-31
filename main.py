@@ -15,9 +15,18 @@
 # limitations under the License.
 #
 import webapp2
-import requests
-import spotipy
 from google.appengine.ext import ndb
+
+from google.appengine.ext import vendor
+vendor.add('lib/spotipy')
+vendor.add('lib/requests')
+import os
+import jinja2
+import spotipy
+import requests
+
+
+
 
 
 JINJA_ENVIRONMENT = jinja2.Environment(
@@ -25,7 +34,7 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
-class spotipy.client.Spotify(auth=None, requests_sessions=True, client_credentials_manager=None)
+# class spotipy.client.Spotify(auth=None, requests_sessions=True, client_credentials_manager=None)
 
 class Song(ndb.Model):
     song_title = ndb.StringProperty(required=True)

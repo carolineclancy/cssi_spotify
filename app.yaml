@@ -15,7 +15,7 @@ handlers:
 libraries:
 - name: webapp2
   version: "2.5.2"
-- name: spotipy
-  version: "2.3.6"
-- name: requests
+- name: jinja2
+  version: latest
+- name: ssl
   version: latest
