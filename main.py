@@ -15,8 +15,9 @@
 # limitations under the License.
 #
 import webapp2
-import spotipy
 import requests
+import spotipy
+
 
 def Test():
     lz_uri = 'spotify:artist:36QJpDe2go2KgaRleHCDTp'
@@ -25,9 +26,7 @@ def Test():
     results = spotify.artist_top_tracks(lz_uri)
 
     for track in results['tracks'][:10]:
-        return "track: {} \n audio: " 'track    : ' + track['name']
-        print 'audio    : ' + track['preview_url']
-        print 'cover art: ' + track['album']['images'][0]['url']
+        return "track: {} \n audio: {} \n cover art: {}".format(track['name'], track['preview_url'], track['album']['images'][0]['url'])
 
 
 class MainHandler(webapp2.RequestHandler):
