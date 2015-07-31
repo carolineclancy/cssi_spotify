@@ -17,6 +17,20 @@
 import webapp2
 import requests
 import spotipy
+from google.appengine.ext import ndb
+
+
+JINJA_ENVIRONMENT = jinja2.Environment(
+    loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
+    extensions=['jinja2.ext.autoescape'],
+    autoescape=True)
+
+class spotipy.client.Spotify(auth=None, requests_sessions=True, client_credentials_manager=None)
+
+class Song(ndb.Model):
+    song_title = ndb.StringProperty(required=True)
+    song_artist = ndb.StringProperty(required=False)
+
 
 
 def Test():
