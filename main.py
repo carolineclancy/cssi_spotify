@@ -16,21 +16,10 @@
 #
 import webapp2
 from google.appengine.ext import ndb
-from google.appengine.ext import vendor
-vendor.add('lib/spotipy')
-vendor.add('lib/requests')
-vendor.add('lib/urllib3')
 import os
 import jinja2
-import requests
-
-import spotipy
-import ssl
-import sys
+import json
 from google.appengine.api import urlfetch
-import urllib3
-
-
 
 
 JINJA_ENVIRONMENT = jinja2.Environment(
@@ -38,14 +27,14 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
-def Test():
-    lz_uri = 'spotify:artist:36QJpDe2go2KgaRleHCDTp'
-
-    spotify = spotipy.Spotify()
-    results = spotify.artist_top_tracks(lz_uri)
-
-    for track in results['tracks'][:10]:
-        return "track: {} \n audio: {}".format(track['name'], track['preview_url'])
+# def Test():
+#     lz_uri = 'spotify:artist:36QJpDe2go2KgaRleHCDTp'
+#
+#     spotify = spotipy.Spotify()
+#     results = spotify.artist_top_tracks(lz_uri)
+#
+#     for track in results['tracks'][:10]:
+#         return "track: {} \n audio: {}".format(track['name'], track['preview_url'])
 
 class AddSongs(ndb.Model):
     song_name = ndb.StringProperty(required=True)
@@ -54,11 +43,21 @@ class AddSongs(ndb.Model):
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
+        term="jack+johnson"
+        term_type="artist"
+        spotify_data_source = urlfetch.fetch("https://api.spotify.com/v1/search?q={}&type={}&limit=1".format(term, term_type))
+        spotify_json_content = spotify_data_source.content
+        parsed_spotify_dictionary = json.loads(spotify_json_content)
+
+        # results = api.artists.search('drake')
+        # for artist in results:
+        #     array.push(artist.name)
 
         entry_query = AddSongs.query()
         entry_data = entry_query.fetch()
         template = JINJA_ENVIRONMENT.get_template('index.html')
-        self.response.write(template.render({'songs':entry_data}))
+
+        self.response.write(template.render({'songs':entry_data, 'spotify': parsed_spotify_dictionary}))
 
 class AddSongHandler(webapp2.RequestHandler):
     def get(self):
