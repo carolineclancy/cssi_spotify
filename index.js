@@ -1,6 +1,12 @@
 $(document).ready(function(){
-  $.post('superman', { field1: "hello", field2 : "hello2"}, 
-    function(returnedData){
-         console.log(returnedData);
-});
+  ("#vote_arrow").click(function(){
+    console.log('click');
+    $.post("/", {"vote":1},
+      function(returnedData){
+          console.log('complete');
+          console.log(returnedData);
+      }).fail(function() {
+        console.log('error');
+    });
+  });
 });

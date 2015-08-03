@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
-<script src="index.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="index.js"></script>
  <link rel = "stylesheet" type = "text/css" href = "index.css">
   <head>
     <title>Pick a song!</title>
@@ -36,8 +36,8 @@
         <td>{{song_entry.votes_of_song}}</td>
         <td>
           <form method="post" action="/">
-            <input type = "radio" name="vote" value="1"><img class = "arrow_size" id = "rotate" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif"><br>
-            <input type = "radio" name="vote" value = "-1"><img class = "arrow_size" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif">
+            <input type = "radio" name="vote" value="1"><img class = "arrow_size" id = "vote_arrow" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif"><br>
+            <input type = "radio" name="vote" value = "-1"><img class = "arrow_size" id = "down_vote_arrow" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif">
             <div><input type="hidden" name="song_url_key" value="{{ song_entry.key.urlsafe() }}"></div>
             <input type = "submit">
           </form>
@@ -47,9 +47,11 @@
       {% endfor %}
     </table>
 
+
     {%for song in songs%}
       <p> </p>
       <iframe src="{{"https://embed.spotify.com/?uri={}".format(song.iframe_id)}}" width="300" height="80" frameborder="0" allowtransparency="true"></iframe>
     {%endfor%}
+
   </body>
 </html>
