@@ -1,7 +1,8 @@
 
 body {
-  background-color: black;
+  background-color: #191919;
   color: white;
+  font-family: 'Montserrat', sans-serif;
 }
 
 #navbar {
@@ -10,15 +11,16 @@ body {
   padding: 0;
   width: 99%;
   height: 50px;
+
 }
 
 .tabs {
   padding: 15px 10px 10px 130px;
-  background-color: white;
+  background-color: #474747;
   color: black;
   float: left;
   margin: 0;
-  border: black solid 1px;
+  border: #191919 solid 1px;
   height: 25px;
   width: 14.75%;
 }
@@ -38,13 +40,14 @@ body {
 }
 
 .playlist_table {
-  border-spacing: 1px;
+  border-spacing: 10px;
   text-align: center;
   margin: 20px 0px 10px 11px;
 }
 
 .playlist_table_content {
   width: 31.25%;
+  background-color: #303030;
 }
 
 #add_song_container {
