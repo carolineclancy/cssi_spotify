@@ -28,8 +28,9 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 
 class AddSongs(ndb.Model):
     song_name = ndb.StringProperty(required=True)
-    artist_name = ndb.StringProperty(required=True)
     votes_of_song = ndb.IntegerProperty(required=True)
+    search_q = ndb.StringProperty(required=False)
+    iframe_id = ndb.StringProperty(required=True)
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -37,9 +38,8 @@ class MainHandler(webapp2.RequestHandler):
         entry_query = AddSongs.query()
         entry_data = entry_query.fetch()
         #spotify
-        term="banana+pancakes"
-        term_type="track"
-        spotify_data_source = urlfetch.fetch("https://api.spotify.com/v1/search?q={}&type={}&limit=1".format(term, term_type))
+
+        spotify_data_source = urlfetch.fetch("https://api.spotify.com/v1/search?q={}&type=track&limit=1".format(AddSongs.search_q))
         spotify_json_content = spotify_data_source.content
         parsed_spotify_dictionary = json.loads(spotify_json_content)
         template = JINJA_ENVIRONMENT.get_template('index.html')
@@ -53,9 +53,7 @@ class MainHandler(webapp2.RequestHandler):
         song.votes_of_song = song.votes_of_song + vote
         song.put()
         #spotify
-        term="banana+pancakes"
-        term_type="track"
-        spotify_data_source = urlfetch.fetch("https://api.spotify.com/v1/search?q={}&type={}&limit=1".format(term, term_type))
+        spotify_data_source = urlfetch.fetch("https://api.spotify.com/v1/search?q={}&type=track&limit=1".format(AddSongs.search_q))
         spotify_json_content = spotify_data_source.content
         parsed_spotify_dictionary = json.loads(spotify_json_content)
         template = JINJA_ENVIRONMENT.get_template('index.html')
@@ -64,18 +62,39 @@ class MainHandler(webapp2.RequestHandler):
 
 class AddSongHandler(webapp2.RequestHandler):
     def get(self):
+        search_term = self.request.get('search_term')
+        search_q = search_term.replace(" ", "+")
+        spotify_data_source = urlfetch.fetch("https://api.spotify.com/v1/search?q={}&type=track&limit=1".format(search_q))
+        spotify_json_content = spotify_data_source.content
+        parsed_spotify_dictionary = json.loads(spotify_json_content)
+
+
         template = JINJA_ENVIRONMENT.get_template('add_song.html')
-        self.response.write(template.render())
+        self.response.write(template.render({'spotify':parsed_spotify_dictionary}))
     def post(self):
         #input song
-        song_name = self.request.get('name_of_song')
-        artist_name = self.request.get('artist_of_song')
+        # song_name = self.request.get('name_of_song')
+        # artist_name = self.request.get('artist_of_song')
+        search_term = self.request.get('search_term')
+
+        search_q = search_term.replace(" ", "+")
+
         votes_of_song = 0
-        added_song = AddSongs(song_name = song_name, artist_name = artist_name, votes_of_song = votes_of_song)
+
+        spotify_data_source = urlfetch.fetch("https://api.spotify.com/v1/search?q={}&type=track&limit=1".format(search_q))
+        spotify_json_content = spotify_data_source.content
+        parsed_spotify_dictionary = json.loads(spotify_json_content)
+
+        spotify = parsed_spotify_dictionary
+        iframe_id = spotify["tracks"]["items"][0]["uri"]
+
+        added_song = AddSongs(song_name = search_term, votes_of_song = votes_of_song, search_q= search_q, iframe_id=iframe_id)
         added_song.put()
         template = JINJA_ENVIRONMENT.get_template('add_song.html')
-        self.response.write(template.render())
+        self.response.write(template.render({'spotify':parsed_spotify_dictionary}))
         self.redirect('/')
+
+
 
 
 app = webapp2.WSGIApplication([
@@ -89,7 +108,7 @@ app = webapp2.WSGIApplication([
 
 
 
-#
+
 # {
 #   "tracks" : {
 #     "href" : "https://api.spotify.com/v1/search?query=banana+pancakes&offset=1&limit=1&type=track",

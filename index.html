@@ -48,9 +48,9 @@
       {% endfor %}
     </table>
 
-    <!-- <img src={{spotify["tracks"]["items"][0]["album"]["images"][0]["url"]}}> -->
-
-    <iframe src="{{"https://embed.spotify.com/?uri={}".format(spotify["tracks"]["items"][0]["uri"])}}" width="300" height="80" frameborder="0" allowtransparency="true"></iframe>
-
+    {%for song in songs%}
+      <p> </p>
+      <iframe src="{{"https://embed.spotify.com/?uri={}".format(song.iframe_id)}}" width="300" height="80" frameborder="0" allowtransparency="true"></iframe>
+    {%endfor%}
   </body>
 </html>
