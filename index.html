@@ -1,5 +1,7 @@
 <!doctype html>
 <html>
+<script src="index.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
  <link rel = "stylesheet" type = "text/css" href = "index.css">
  <a href="/add_song">Add a song!</a>
   <head>
@@ -28,9 +30,10 @@
         <td>{{song_entry.artist_name}}</td>
         <td>{{song_entry.votes_of_song}}</td>
         <td>
-          <form>
-            <input type = "radio" name="vote" value="upvote"><img class = "arrow_size" id = "rotate" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif">
-            <input type = "radio" name="vote" value = "downvote"><img class = "arrow_size" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif">
+          <form method="post" action="/">
+            <input type = "radio" name="vote" value="1"><img class = "arrow_size" id = "rotate" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif">
+            <input type = "radio" name="vote" value = "-1"><img class = "arrow_size" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif">
+            <div><input type="hidden" name="song_url_key" value="{{ song_entry.key.urlsafe() }}"></div>
             <input type = "submit">
           </form>
         </td>

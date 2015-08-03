@@ -50,12 +50,23 @@ class AddSongs(ndb.Model):
     artist_name = ndb.StringProperty(required=True)
     votes_of_song = ndb.IntegerProperty(required=True)
 
+
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         entry_query = AddSongs.query()
         entry_data = entry_query.fetch()
         template = JINJA_ENVIRONMENT.get_template('index.html')
         self.response.write(template.render({'songs':entry_data}))
+    def post(self):
+        vote = int(self.request.get('vote'))
+        song_url_key = self.request.get('song_url_key')
+        song_key = ndb.Key(urlsafe=song_url_key)
+        song = song_key.get()
+        song.votes_of_song = song.votes_of_song + vote
+        song.put()
+        template = JINJA_ENVIRONMENT.get_template('index.html')
+        self.response.write(template.render())
+        self.redirect('/')
 
 class AddSongHandler(webapp2.RequestHandler):
     def get(self):
