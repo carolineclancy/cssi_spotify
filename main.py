@@ -21,13 +21,10 @@ import jinja2
 import json
 from google.appengine.api import urlfetch
 
-
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
-
-
 
 class AddSongs(ndb.Model):
     song_name = ndb.StringProperty(required=True)
@@ -36,23 +33,41 @@ class AddSongs(ndb.Model):
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
+        #get database songs
+        entry_query = AddSongs.query()
+        entry_data = entry_query.fetch()
+        #spotify
         term="banana+pancakes"
         term_type="track"
         spotify_data_source = urlfetch.fetch("https://api.spotify.com/v1/search?q={}&type={}&limit=1".format(term, term_type))
         spotify_json_content = spotify_data_source.content
         parsed_spotify_dictionary = json.loads(spotify_json_content)
-
-        entry_query = AddSongs.query()
-        entry_data = entry_query.fetch()
         template = JINJA_ENVIRONMENT.get_template('index.html')
-
-        self.response.write(template.render({'songs':entry_data, 'spotify': parsed_spotify_dictionary}))
+        self.response.write(template.render({'songs':entry_data, 'spotify':parsed_spotify_dictionary}))
+    def post(self):
+        #voting system
+        vote = int(self.request.get('vote'))
+        song_url_key = self.request.get('song_url_key')
+        song_key = ndb.Key(urlsafe=song_url_key)
+        song = song_key.get()
+        song.votes_of_song = song.votes_of_song + vote
+        song.put()
+        #spotify
+        term="banana+pancakes"
+        term_type="track"
+        spotify_data_source = urlfetch.fetch("https://api.spotify.com/v1/search?q={}&type={}&limit=1".format(term, term_type))
+        spotify_json_content = spotify_data_source.content
+        parsed_spotify_dictionary = json.loads(spotify_json_content)
+        template = JINJA_ENVIRONMENT.get_template('index.html')
+        self.response.write(template.render({'spotify':parsed_spotify_dictionary}))
+        self.redirect('/')
 
 class AddSongHandler(webapp2.RequestHandler):
     def get(self):
         template = JINJA_ENVIRONMENT.get_template('add_song.html')
         self.response.write(template.render())
     def post(self):
+        #input song
         song_name = self.request.get('name_of_song')
         artist_name = self.request.get('artist_of_song')
         votes_of_song = 0

@@ -1,5 +1,7 @@
 <!doctype html>
 <html>
+<script src="index.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
  <link rel = "stylesheet" type = "text/css" href = "index.css">
   <head>
     <title>Pick a song!</title>
@@ -22,6 +24,7 @@
       </div>
     </div>
     <table class = "playlist_table">
+
       <th class="playlist_table_content">Song Name</th>
       <th class="playlist_table_content">Artist Name</th>
       <th class="playlist_table_content">Votes of Song</th>
@@ -31,6 +34,14 @@
         <td>{{song_entry.song_name}}</td>
         <td>{{song_entry.artist_name}}</td>
         <td>{{song_entry.votes_of_song}}</td>
+        <td>
+          <form method="post" action="/">
+            <input type = "radio" name="vote" value="1"><img class = "arrow_size" id = "rotate" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif">
+            <input type = "radio" name="vote" value = "-1"><img class = "arrow_size" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif">
+            <div><input type="hidden" name="song_url_key" value="{{ song_entry.key.urlsafe() }}"></div>
+            <input type = "submit">
+          </form>
+        </td>
         <td><img class="arrow_size" id ="rotate" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif"><br><img class = "arrow_size" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif"></td>
       </tr>
       <!-- <hr class = "line_length"/> -->
