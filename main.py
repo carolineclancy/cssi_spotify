@@ -27,19 +27,12 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
-# def Test():
-#     lz_uri = 'spotify:artist:36QJpDe2go2KgaRleHCDTp'
-#
-#     spotify = spotipy.Spotify()
-#     results = spotify.artist_top_tracks(lz_uri)
-#
-#     for track in results['tracks'][:10]:
-#         return "track: {} \n audio: {}".format(track['name'], track['preview_url'])
+
 
 class AddSongs(ndb.Model):
     song_name = ndb.StringProperty(required=True)
     artist_name = ndb.StringProperty(required=True)
-    votes_of_song = ndb.IntegerProperty
+    votes_of_song = ndb.IntegerProperty(required=True)
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -48,10 +41,6 @@ class MainHandler(webapp2.RequestHandler):
         spotify_data_source = urlfetch.fetch("https://api.spotify.com/v1/search?q={}&type={}&limit=1".format(term, term_type))
         spotify_json_content = spotify_data_source.content
         parsed_spotify_dictionary = json.loads(spotify_json_content)
-
-        # results = api.artists.search('drake')
-        # for artist in results:
-        #     array.push(artist.name)
 
         entry_query = AddSongs.query()
         entry_data = entry_query.fetch()
@@ -66,8 +55,8 @@ class AddSongHandler(webapp2.RequestHandler):
     def post(self):
         song_name = self.request.get('name_of_song')
         artist_name = self.request.get('artist_of_song')
-        votes_of_song = [0]
-        added_song = AddSongs(song_name = song_name, artist_name = artist_name, votes_of_song=votes_of_song)
+        votes_of_song = 0
+        added_song = AddSongs(song_name = song_name, artist_name = artist_name, votes_of_song = votes_of_song)
         added_song.put()
         template = JINJA_ENVIRONMENT.get_template('add_song.html')
         self.response.write(template.render())

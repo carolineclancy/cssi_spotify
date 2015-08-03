@@ -6,8 +6,45 @@
 .clear_both{
   clear:both;
 }*/
+#rotate{
+  transform: rotate(180deg);
+}
+
+.arrow_size{
+  width:50px;
+  height:50px;
+}
 
 .playlist_table{
   border-spacing: 5px;
   text-align: center;
+}
+
+body {
+  background-color: black;
+  color: white;
+}
+
+#navbar {
+  border: 1px black solid;
+  margin: 10px 10px 10px 10px;
+  padding: 0;
+  width: 99%;
+  height: 50px;
+}
+
+.tabs {
+  padding: 15px 10px 10px 130px;
+  background-color: white;
+  color: black;
+  float: left;
+  margin: 0;
+  border: black solid 1px;
+  height: 25px;
+  width: 14.75%;
+}
+
+.tabs:hover {
+  background-color: blue;
+  color: white;
 }
