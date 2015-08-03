@@ -32,10 +32,9 @@
       {% for song_entry in songs %}
       <tr>
         <td>
-        {%for song in songs%}
-          <p> </p>
-          <iframe src="{{"https://embed.spotify.com/?uri={}".format(song.iframe_id)}}" width="300" height="80" frameborder="0" allowtransparency="true"></iframe>
-        {%endfor%}
+
+          <iframe src="{{"https://embed.spotify.com/?uri={}".format(song_entry.iframe_id)}}" width="300" height="80" frameborder="0" allowtransparency="true"></iframe>
+
         </td>
         <td>{{song_entry.song_name}}</td>
         <td>{{song_entry.artist_name}}</td>
