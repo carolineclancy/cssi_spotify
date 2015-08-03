@@ -1,0 +1,13 @@
+/*.line_length{
+  width:350px;
+  float: left;
+}
+
+.clear_both{
+  clear:both;
+}*/
+
+.playlist_table{
+  border-spacing: 5px;
+  text-align: center;
+}
