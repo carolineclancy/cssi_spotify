@@ -24,13 +24,19 @@
       </div>
     </div>
     <table class = "playlist_table">
-
+      <th class="playlist_table_content"></th>
       <th class="playlist_table_content">Song Name</th>
       <th class="playlist_table_content">Artist Name</th>
       <th class="playlist_table_content">Votes of Song</th>
       <th></th>
       {% for song_entry in songs %}
       <tr>
+        <td>
+        {%for song in songs%}
+          <p> </p>
+          <iframe src="{{"https://embed.spotify.com/?uri={}".format(song.iframe_id)}}" width="300" height="80" frameborder="0" allowtransparency="true"></iframe>
+        {%endfor%}
+        </td>
         <td>{{song_entry.song_name}}</td>
         <td>{{song_entry.artist_name}}</td>
         <td>{{song_entry.votes_of_song}}</td>
@@ -46,12 +52,5 @@
       <!-- <hr class = "line_length"/> -->
       {% endfor %}
     </table>
-
-
-    {%for song in songs%}
-      <p> </p>
-      <iframe src="{{"https://embed.spotify.com/?uri={}".format(song.iframe_id)}}" width="300" height="80" frameborder="0" allowtransparency="true"></iframe>
-    {%endfor%}
-
   </body>
 </html>

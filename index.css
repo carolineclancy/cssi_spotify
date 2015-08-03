@@ -28,7 +28,7 @@ body {
   color: white;
 }
 
-#rotate {
+#vote_arrow {
   transform: rotate(180deg);
 }
 
