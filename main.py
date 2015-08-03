@@ -22,13 +22,13 @@ vendor.add('lib/requests')
 vendor.add('lib/urllib3')
 import os
 import jinja2
-import requests
 
-import spotipy
-import ssl
-import sys
-from google.appengine.api import urlfetch
-import urllib3
+# import requests
+# import spotipy
+# import ssl
+# import sys
+# from google.appengine.api import urlfetch
+# import urllib3
 
 
 
@@ -50,7 +50,7 @@ def Test():
 class AddSongs(ndb.Model):
     song_name = ndb.StringProperty(required=True)
     artist_name = ndb.StringProperty(required=True)
-    votes_of_song = ndb.IntegerProperty
+    votes_of_song = ndb.IntegerProperty(required=True)
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -67,8 +67,8 @@ class AddSongHandler(webapp2.RequestHandler):
     def post(self):
         song_name = self.request.get('name_of_song')
         artist_name = self.request.get('artist_of_song')
-        votes_of_song = [0]
-        added_song = AddSongs(song_name = song_name, artist_name = artist_name, votes_of_song=votes_of_song)
+        votes_of_song = 0
+        added_song = AddSongs(song_name = song_name, artist_name = artist_name, votes_of_song = votes_of_song)
         added_song.put()
         template = JINJA_ENVIRONMENT.get_template('add_song.html')
         self.response.write(template.render())
