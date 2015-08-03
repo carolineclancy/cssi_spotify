@@ -23,15 +23,13 @@ vendor.add('lib/urllib3')
 import os
 import jinja2
 
+
 # import requests
 # import spotipy
 # import ssl
 # import sys
 # from google.appengine.api import urlfetch
 # import urllib3
-
-
-
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -54,7 +52,6 @@ class AddSongs(ndb.Model):
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-
         entry_query = AddSongs.query()
         entry_data = entry_query.fetch()
         template = JINJA_ENVIRONMENT.get_template('index.html')

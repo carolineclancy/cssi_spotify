@@ -22,14 +22,18 @@
       <th>Artist Name</th>
       <th>Votes of Song</th>
       <th></th>
-      <th></th>
       {% for song_entry in songs %}
       <tr>
         <td>{{song_entry.song_name}}</td>
         <td>{{song_entry.artist_name}}</td>
         <td>{{song_entry.votes_of_song}}</td>
-        <td><img class = "arrow_size" id = "rotate" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif"></td>
-        <td><img class = "arrow_size" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif"></td>
+        <td>
+          <form>
+            <input type = "radio" name="vote" value="upvote"><img class = "arrow_size" id = "rotate" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif">
+            <input type = "radio" name="vote" value = "downvote"><img class = "arrow_size" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif">
+            <input type = "submit">
+          </form>
+        </td>
       </tr>
       <!-- <hr class = "line_length"/> -->
       {% endfor %}
