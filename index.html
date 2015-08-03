@@ -3,26 +3,31 @@
 <script src="index.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
  <link rel = "stylesheet" type = "text/css" href = "index.css">
- <a href="/add_song">Add a song!</a>
   <head>
     <title>Pick a song!</title>
   </head>
   <body>
     <div id="navbar">
+      <a href="/">
+        <div class="tabs">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Home&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+      </a>
+      <a href="/add_song">
+        <div class="tabs">
+        &nbsp;&nbsp;Add a Song&nbsp;&nbsp;
+        </div>
+      </a>
       <div class="tabs">
-        Home
-      </div>
-      <div class="tabs">
-        About Us
+        &nbsp;&nbsp;&nbsp;About Us&nbsp;&nbsp;&nbsp;
       </div>
       <div class="tabs">
         About our Site
       </div>
     </div>
     <table class = "playlist_table">
-      <th>Song Name</th>
-      <th>Artist Name</th>
-      <th>Votes of Song</th>
+
+      <th class="playlist_table_content">Song Name</th>
+      <th class="playlist_table_content">Artist Name</th>
+      <th class="playlist_table_content">Votes of Song</th>
       <th></th>
       {% for song_entry in songs %}
       <tr>
@@ -37,10 +42,15 @@
             <input type = "submit">
           </form>
         </td>
+        <td><img class="arrow_size" id ="rotate" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif"><br><img class = "arrow_size" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif"></td>
       </tr>
       <!-- <hr class = "line_length"/> -->
       {% endfor %}
     </table>
+
+    <!-- <img src={{spotify["tracks"]["items"][0]["album"]["images"][0]["url"]}}> -->
+
+    <iframe src="{{"https://embed.spotify.com/?uri={}".format(spotify["tracks"]["items"][0]["uri"])}}" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
 
   </body>
 </html>
