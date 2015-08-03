@@ -6,7 +6,7 @@
 .clear_both{
   clear:both;
 }*/
-#rotate {
+#vote_arrow {
   transform: rotate(180deg);
 }
 

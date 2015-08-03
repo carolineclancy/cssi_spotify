@@ -13,6 +13,10 @@ handlers:
   static_files: index.css
   upload: index\.css
 
+- url: /index\.js
+  static_files: index.js
+  upload: index\.js
+
 - url: .*
   script: main.app
 
