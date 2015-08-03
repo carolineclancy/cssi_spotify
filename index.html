@@ -36,13 +36,12 @@
         <td>{{song_entry.votes_of_song}}</td>
         <td>
           <form method="post" action="/">
-            <input type = "radio" name="vote" value="1"><img class = "arrow_size" id = "rotate" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif">
+            <input type = "radio" name="vote" value="1"><img class = "arrow_size" id = "rotate" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif"><br>
             <input type = "radio" name="vote" value = "-1"><img class = "arrow_size" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif">
             <div><input type="hidden" name="song_url_key" value="{{ song_entry.key.urlsafe() }}"></div>
             <input type = "submit">
           </form>
         </td>
-        <td><img class="arrow_size" id ="rotate" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif"><br><img class = "arrow_size" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif"></td>
       </tr>
       <!-- <hr class = "line_length"/> -->
       {% endfor %}
