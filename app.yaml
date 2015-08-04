@@ -17,6 +17,9 @@ handlers:
   static_files: index.js
   upload: index\.js
 
+- url: /images
+  static_dir: images
+
 - url: .*
   script: main.app
 

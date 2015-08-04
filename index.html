@@ -50,8 +50,8 @@
         <td class="playlist_table_content">{{song_entry.artist_name}}</td>
         <td class = "votes_column">{{song_entry.votes_of_song}}</td>
         <td id="arrow_column">
-            <div class = "rotate_vote"><img id="up_arrow-#{{count}}" class = "vote_arrow" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif"></div><br>
-            <div class = "down_vote_arrow"><img id="down_arrow-#{{count}}" class = "vote_arrow" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif"></div>
+            <div class = "rotate_vote"><img id="up_arrow-#{{count}}" class = "vote_arrow" src="/images/arrow.gif"></div><br>
+            <div class = "down_vote_arrow"><img id="down_arrow-#{{count}}" class = "vote_arrow" src="/images/arrow.gif"></div>
             <!-- <form method = "post" id="song_key"> -->
             <input id="key-{{count}}" class="key_list" type = "hidden" name="song_url_key" value="{{ song_entry.key.urlsafe() }}"/>
             <!-- <input type = "submit" />
