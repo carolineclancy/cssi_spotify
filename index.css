@@ -98,3 +98,17 @@ body {
 #add_song_content {
   margin: 0px 0px 4px 4px
 }
+
+
+#add_song_button {
+  background: #649000;
+  width: 100px;
+  height: 30px;
+  border-radius: 20px;
+  border: 0;
+  font-family: 'Montserrat', sans-serif;
+  color: white;
+}
+#add_song_button:hover {
+  background: #82BD03;
+}
