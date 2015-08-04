@@ -81,16 +81,20 @@ body {
 
 /* The column under the blank space or where the broken arrows are */
 #arrow_layout {
+  padding: 5px;
   background-color: #272727;
 }
 
 /* The invisible box holding the add song bar and submit button */
 #add_song_container {
   font-family:Courier;
-  margin-left: 11px;
+  margin-left: 12px;
+  background-color: #272727;
+  width: 23%;
+  padding: 10px;
+  text-align: center;
 }
 
-/* All of the children of add_song_container */
-#add_song_container * {
-  margin-bottom: 1px;
+#add_song_content {
+  margin: 0px 0px 4px 4px
 }
