@@ -2,6 +2,7 @@
 <html>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="index.js"></script>
+<link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
  <link rel = "stylesheet" type = "text/css" href = "index.css">
   <head>
     <title>Pick a song!</title>
@@ -30,7 +31,7 @@
       <th class="playlist_table_content">Votes of Song</th>
       <th></th>
       {% for song_entry in songs %}
-      <tr>
+      <tr class="playlist_table_content" allowtransparency="true">
         <td>
           <iframe src="{{"https://embed.spotify.com/?uri={}".format(song_entry.iframe_id)}}" width="300" height="80" frameborder="0" allowtransparency="true"></iframe>
         </td>
