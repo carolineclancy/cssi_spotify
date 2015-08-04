@@ -20,18 +20,12 @@ import os
 import jinja2
 import json
 from google.appengine.api import urlfetch
-import operator
-import weakref
-import gc
-from operator import itemgetter, attrgetter
-
-
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
-instances = []
+
 class AddSongs(ndb.Model):
     song_name = ndb.StringProperty(required=True)
     votes_of_song = ndb.IntegerProperty(required=True)
@@ -46,12 +40,10 @@ class MainHandler(webapp2.RequestHandler):
 
         entry_data = entry_query.fetch()
         #spotify
-
+        # searches spotify for the song a user searched
         spotify_data_source = urlfetch.fetch("https://api.spotify.com/v1/search?q={}&type=track&limit=1".format(AddSongs.search_q))
         spotify_json_content = spotify_data_source.content
         parsed_spotify_dictionary = json.loads(spotify_json_content)
-
-
 
         template = JINJA_ENVIRONMENT.get_template('index.html')
         self.response.write(template.render({'songs':entry_data, 'spotify':parsed_spotify_dictionary}))
@@ -110,10 +102,12 @@ class AddSongHandler(webapp2.RequestHandler):
         self.response.write(template.render({'spotify':parsed_spotify_dictionary}))
         self.redirect('/')
 
-
-
+class AboutUs(webapp2.RequestHandler):
+    template = JINJA_ENVIRONMENT.get_template('about_us.html')
+    self.redirect('/')
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/add_song', AddSongHandler)
+    ('/about_us', AboutUs)
 ], debug=True)
