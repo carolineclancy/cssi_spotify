@@ -37,10 +37,11 @@
       <th class="playlist_table_content_th">Artist Name</th>
       <th class="playlist_table_content_th">Votes of Song</th>
       <th></th>
+
+
       {% set count = 0 %}
       {% for song_entry in songs %}
       <tr class="playlist_table_content" allowtransparency="true">
-
       <tr>
         <td class="playlist_table_content">
           <iframe src="{{"https://embed.spotify.com/?uri={}".format(song_entry.iframe_id)}}" width="300" height="80" frameborder="0" allowtransparency="true"></iframe>
@@ -56,10 +57,11 @@
             <!-- <input type = "submit" />
           </form> -->
         </td>
-      </tr>
-      {% set count = count + 1 %}
+
+        {% set count = count + 1 %}
       <!-- <hr class = "line_length"/> -->
       {% endfor %}
+      </tr>
     </table>
   </body>
 </html>

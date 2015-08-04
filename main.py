@@ -47,8 +47,11 @@ class MainHandler(webapp2.RequestHandler):
         spotify_json_content = spotify_data_source.content
         parsed_spotify_dictionary = json.loads(spotify_json_content)
 
+        iframes_var = []
+
+
         template = JINJA_ENVIRONMENT.get_template('index.html')
-        self.response.write(template.render({'songs':entry_data, 'spotify':parsed_spotify_dictionary}))
+        self.response.write(template.render({'songs':entry_data, 'spotify':parsed_spotify_dictionary, 'iframes_var':iframes_var}))
 
     def post(self):
         #voting system
@@ -63,7 +66,10 @@ class MainHandler(webapp2.RequestHandler):
         spotify_json_content = spotify_data_source.content
         parsed_spotify_dictionary = json.loads(spotify_json_content)
         template = JINJA_ENVIRONMENT.get_template('index.html')
-        self.response.write(template.render({'spotify':parsed_spotify_dictionary}))
+
+        iframes_var = []
+
+        self.response.write(template.render({'spotify':parsed_spotify_dictionary, 'iframes_var': iframes_var}))
         self.redirect('/')
 
 class AddSongHandler(webapp2.RequestHandler):
@@ -74,7 +80,8 @@ class AddSongHandler(webapp2.RequestHandler):
         spotify_json_content = spotify_data_source.content
         parsed_spotify_dictionary = json.loads(spotify_json_content)
         template = JINJA_ENVIRONMENT.get_template('add_song.html')
-        self.response.write(template.render({'spotify':parsed_spotify_dictionary}))
+        iframes_var = []
+        self.response.write(template.render({'spotify':parsed_spotify_dictionary, 'iframes_var': iframes_var}))
     def post(self):
         #input song
         # song_name = self.request.get('name_of_song')
@@ -89,8 +96,11 @@ class AddSongHandler(webapp2.RequestHandler):
         iframe_id = spotify["tracks"]["items"][0]["uri"]
         added_song = AddSongs(song_name = search_term, votes_of_song = votes_of_song, search_q= search_q, iframe_id=iframe_id)
         added_song.put()
+
+        iframes_var = []
+
         template = JINJA_ENVIRONMENT.get_template('add_song.html')
-        self.response.write(template.render({'spotify':parsed_spotify_dictionary}))
+        self.response.write(template.render({'spotify':parsed_spotify_dictionary, 'iframes_var':iframes_var}))
         self.redirect('/')
 
 
