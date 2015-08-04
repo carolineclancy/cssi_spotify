@@ -31,33 +31,32 @@
     </div>
     <!-- This is the playlist -->
     <table class = "playlist_table">
-
-      <th class="playlist_table_th"></th>
-      <th class="playlist_table_th">Song Name</th>
-      <th class="playlist_table_th">Artist Name</th>
-      <th class="playlist_table_th_vote">Votes of Song</th>
-      <th class="playlist_table_th_arrow"></th>
+      <th class="playlist_table_content_th"></th>
+      <th class="playlist_table_content_th">Song Name</th>
+      <th class="playlist_table_content_th">Artist Name</th>
+      <th class="playlist_table_content_th">Votes of Song</th>
+      <th></th>
+      {% set count = 0 %}
       {% for song_entry in songs %}
-
       <tr class="playlist_table_content" allowtransparency="true">
+
       <tr>
         <td class="playlist_table_content">
-          <iframe src="{{"https://embed.spotify.com/?uri={}".format(song_entry.iframe_id)}}" width="430" height="80" frameborder="0" allowtransparency="true"></iframe>
+          <iframe src="{{"https://embed.spotify.com/?uri={}".format(song_entry.iframe_id)}}" width="500" height="80" frameborder="0" allowtransparency="true"></iframe>
         </td>
-
-        <td class="playlist_table_content">{{song_entry.song_name}}</td>
-        <td class="playlist_table_content">{{song_entry.artist_name}}</td>
-        <td class="playlist_table_content_vote">{{song_entry.votes_of_song}}</td>
-        <td id="arrow_layout">
-
-          <form method="post" action="/">
-            <input type = "radio" name="vote" value="1"><img class = "arrow_size" id = "vote_arrow" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif"><br>
-            <input type = "radio" name="vote" value = "-1"><img class = "arrow_size" id = "down_vote_arrow" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif">
-            <div><input type="hidden" name="song_url_key" value="{{ song_entry.key.urlsafe() }}"></div>
-            <input type = "submit">
-          </form>
+        <td>{{song_entry.song_name}}</td>
+        <td>{{song_entry.artist_name}}</td>
+        <td>{{song_entry.votes_of_song}}</td>
+        <td>
+            <div class = "rotate_vote"><img id="up_arrow-#{{count}}" class = "vote_arrow" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif"></div><br>
+            <img id="down_arrow-#{{count}}" class = "vote_arrow" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif">
+            <!-- <form method = "post" id="song_key"> -->
+            <input id="key-{{count}}" class="key_list" type = "hidden" name="song_url_key" value="{{ song_entry.key.urlsafe() }}"/>
+            <!-- <input type = "submit" />
+          </form> -->
         </td>
       </tr>
+      {% set count = count + 1 %}
       <!-- <hr class = "line_length"/> -->
       {% endfor %}
     </table>

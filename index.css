@@ -31,13 +31,12 @@ body {
   color: #A0A09C;
 }
 
-/* This is the css for the whichever arrow needed rotating */
-#vote_arrow {
+
+.rotate_vote {
   transform: rotate(180deg);
 }
 
-/* Made the arrows not so huge */
-.arrow_size {
+.vote_arrow {
   width:50px;
   height:50px;
 }
@@ -111,4 +110,8 @@ body {
 }
 #add_song_button:hover {
   background: #82BD03;
+}
+
+#invisible_button{
+  display: none;
 }
