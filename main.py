@@ -46,7 +46,6 @@ class MainHandler(webapp2.RequestHandler):
         self.response.write(template.render({'songs':entry_data, 'spotify':parsed_spotify_dictionary}))
     def post(self):
         #voting system
-        vote = int(self.request.get('vote'))
         song_url_key = self.request.get('song_url_key')
         song_key = ndb.Key(urlsafe=song_url_key)
         song = song_key.get()

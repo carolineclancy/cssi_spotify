@@ -1,12 +1,16 @@
 $(document).ready(function(){
-  ("#vote_arrow").click(function(){
+  $(".vote_arrow").click(function(){
     console.log('click');
-    $.post("/", {"vote":1},
+    // $("#song_key").submit(function (event){
+    //   event.preventDefault();
+    // });
+
+    $.post("http://localhost:8080/", {"vote":1},
       function(returnedData){
           console.log('complete');
           console.log(returnedData);
-      }).fail(function() {
-        console.log('error');
+      }).fail(function(e) {
+        console.log(e);
     });
   });
 });

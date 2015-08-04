@@ -32,20 +32,15 @@
       {% for song_entry in songs %}
       <tr>
         <td>
-
           <iframe src="{{"https://embed.spotify.com/?uri={}".format(song_entry.iframe_id)}}" width="300" height="80" frameborder="0" allowtransparency="true"></iframe>
-
         </td>
         <td>{{song_entry.song_name}}</td>
         <td>{{song_entry.artist_name}}</td>
         <td>{{song_entry.votes_of_song}}</td>
         <td>
-          <form method="post" action="/">
-            <input type = "radio" name="vote" value="1"><img class = "arrow_size" id = "vote_arrow" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif"><br>
-            <input type = "radio" name="vote" value = "-1"><img class = "arrow_size" id = "down_vote_arrow" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif">
-            <div><input type="hidden" name="song_url_key" value="{{ song_entry.key.urlsafe() }}"></div>
-            <input type = "submit">
-          </form>
+            <img class = "vote_arrow" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif"><br>
+            <img class = "down_vote_arrow" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif">
+            <div type="hidden" name="song_url_key" value="{{ song_entry.key.urlsafe() }}"></div>
         </td>
       </tr>
       <!-- <hr class = "line_length"/> -->
