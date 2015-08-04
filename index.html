@@ -30,17 +30,20 @@
       <th class="playlist_table_content">Artist Name</th>
       <th class="playlist_table_content">Votes of Song</th>
       <th></th>
+
+
+
       {% for song_entry in songs %}
-<<<<<<< HEAD
+
+
       <tr class="playlist_table_content" allowtransparency="true">
-=======
       <tr>
         <td>
 
           <iframe src="{{"https://embed.spotify.com/?uri={}".format(song_entry.iframe_id)}}" width="300" height="80" frameborder="0" allowtransparency="true"></iframe>
 
         </td>
->>>>>>> bf6d203faaf77124497f55f08a99f1ee92ca05da
+
         <td>{{song_entry.song_name}}</td>
         <td>{{song_entry.artist_name}}</td>
         <td>{{song_entry.votes_of_song}}</td>

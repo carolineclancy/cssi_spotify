@@ -20,30 +20,42 @@ import os
 import jinja2
 import json
 from google.appengine.api import urlfetch
+import operator
+import weakref
+import gc
+from operator import itemgetter, attrgetter
+
+
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
-
+instances = []
 class AddSongs(ndb.Model):
     song_name = ndb.StringProperty(required=True)
     votes_of_song = ndb.IntegerProperty(required=True)
     search_q = ndb.StringProperty(required=False)
     iframe_id = ndb.StringProperty(required=True)
 
+
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         #get database songs
-        entry_query = AddSongs.query()
+        entry_query = AddSongs.query().order(-AddSongs.votes_of_song)
+
         entry_data = entry_query.fetch()
         #spotify
 
         spotify_data_source = urlfetch.fetch("https://api.spotify.com/v1/search?q={}&type=track&limit=1".format(AddSongs.search_q))
         spotify_json_content = spotify_data_source.content
         parsed_spotify_dictionary = json.loads(spotify_json_content)
+
+
+
         template = JINJA_ENVIRONMENT.get_template('index.html')
         self.response.write(template.render({'songs':entry_data, 'spotify':parsed_spotify_dictionary}))
+
     def post(self):
         #voting system
         vote = int(self.request.get('vote'))
@@ -88,8 +100,12 @@ class AddSongHandler(webapp2.RequestHandler):
         spotify = parsed_spotify_dictionary
         iframe_id = spotify["tracks"]["items"][0]["uri"]
 
+
         added_song = AddSongs(song_name = search_term, votes_of_song = votes_of_song, search_q= search_q, iframe_id=iframe_id)
         added_song.put()
+
+
+
         template = JINJA_ENVIRONMENT.get_template('add_song.html')
         self.response.write(template.render({'spotify':parsed_spotify_dictionary}))
         self.redirect('/')
