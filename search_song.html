@@ -24,13 +24,24 @@
     </div>
       <form method = "post">
         <div id="add_song_container">
-
-          <div>Song: <input name="search_term" type="text"></div>
-
-
-          <div><input type="submit" value="Search a Song!">
+          <div><input type="submit" value="Add Song!">
         </div>
       </form>
+      <table class = "playlist_table">
+        <th class="playlist_table_content"></th>
+        <th class="playlist_table_content">Song Name</th>
+        <th class="playlist_table_content">Artist Name</th>
+        {% for song_entry in songs %}
+        <tr class="playlist_table_content" allowtransparency="true">
+          <td>
+            <iframe src="{{"https://embed.spotify.com/?uri={}".format(song_entry.iframe_id)}}" width="300" height="80" frameborder="0" allowtransparency="true"></iframe>
+          </td>
+          <td>{{song_entry.song_name}}</td>
+          <td>{{song_entry.artist_name}}</td>
+        </tr>
+        <!-- <hr class = "line_length"/> -->
+        {% endfor %}
+      </table>
     </div>
   </body>
 </html>

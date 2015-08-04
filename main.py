@@ -46,10 +46,11 @@ class MainHandler(webapp2.RequestHandler):
         self.response.write(template.render({'songs':entry_data, 'spotify':parsed_spotify_dictionary}))
     def post(self):
         #voting system
+        song_vote_count = self.request.get('vote')
         song_url_key = self.request.get('song_url_key')
         song_key = ndb.Key(urlsafe=song_url_key)
         song = song_key.get()
-        song.votes_of_song = song.votes_of_song + vote
+        song.votes_of_song = song.votes_of_song +  int(song_vote_count)
         song.put()
         #spotify
         spotify_data_source = urlfetch.fetch("https://api.spotify.com/v1/search?q={}&type=track&limit=1".format(AddSongs.search_q))
@@ -66,8 +67,6 @@ class AddSongHandler(webapp2.RequestHandler):
         spotify_data_source = urlfetch.fetch("https://api.spotify.com/v1/search?q={}&type=track&limit=1".format(search_q))
         spotify_json_content = spotify_data_source.content
         parsed_spotify_dictionary = json.loads(spotify_json_content)
-
-
         template = JINJA_ENVIRONMENT.get_template('add_song.html')
         self.response.write(template.render({'spotify':parsed_spotify_dictionary}))
     def post(self):
@@ -75,28 +74,52 @@ class AddSongHandler(webapp2.RequestHandler):
         # song_name = self.request.get('name_of_song')
         # artist_name = self.request.get('artist_of_song')
         search_term = self.request.get('search_term')
-
         search_q = search_term.replace(" ", "+")
-
         votes_of_song = 0
-
         spotify_data_source = urlfetch.fetch("https://api.spotify.com/v1/search?q={}&type=track&limit=1".format(search_q))
         spotify_json_content = spotify_data_source.content
         parsed_spotify_dictionary = json.loads(spotify_json_content)
-
         spotify = parsed_spotify_dictionary
         iframe_id = spotify["tracks"]["items"][0]["uri"]
-
         added_song = AddSongs(song_name = search_term, votes_of_song = votes_of_song, search_q= search_q, iframe_id=iframe_id)
         added_song.put()
         template = JINJA_ENVIRONMENT.get_template('add_song.html')
         self.response.write(template.render({'spotify':parsed_spotify_dictionary}))
         self.redirect('/')
 
-
-
+# class ChooseSongHandler(webapp2.RequestHandler):
+#     def get(self):
+#         search_term = self.request.get('search_term')
+#         search_q = search_term.replace(" ", "+")
+#         votes_of_song = 0
+#         spotify_data_source = urlfetch.fetch("https://api.spotify.com/v1/search?q={}&type=track&limit=1".format(search_q))
+#         spotify_json_content = spotify_data_source.content
+#         parsed_spotify_dictionary = json.loads(spotify_json_content)
+#         spotify = parsed_spotify_dictionary
+#         song_choice =
+#         iframe_id = spotify["tracks"]["items"][song_choice]["uri"]
+#         added_song = AddSongs(song_name = search_term, votes_of_song = votes_of_song, search_q= search_q, iframe_id=iframe_id)
+#         added_song.put()
+#         template = JINJA_ENVIRONMENT.get_template('add_song.html')
+#         self.response.write(template.render({'spotify':parsed_spotify_dictionary}))
+#     def post(self):
+#          search_term = self.request.get('search_term')
+#          search_q = search_term.replace(" ", "+")
+#          votes_of_song = 0
+#          spotify_data_source = urlfetch.fetch("https://api.spotify.com/v1/search?q={}&type=track&limit=1".format(search_q))
+#          spotify_json_content = spotify_data_source.content
+#          parsed_spotify_dictionary = json.loads(spotify_json_content)
+#          spotify = parsed_spotify_dictionary
+#          song_choice =
+#          iframe_id = spotify["tracks"]["items"][song_choice]["uri"]
+#          added_song = AddSongs(song_name = search_term, votes_of_song = votes_of_song, search_q= search_q, iframe_id=iframe_id)
+#          added_song.put()
+#          template = JINJA_ENVIRONMENT.get_template('add_song.html')
+#          self.response.write(template.render({'spotify':parsed_spotify_dictionary}))
+#          self.redirect('/')
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
-    ('/add_song', AddSongHandler)
+    ('/add_song', AddSongHandler),
+    # ('/choose', ChooseSongHandler)
 ], debug=True)

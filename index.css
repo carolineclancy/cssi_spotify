@@ -30,7 +30,7 @@ body {
   color: white;
 }
 
-.vote_arrow {
+.rotate_vote {
   transform: rotate(180deg);
 }
 

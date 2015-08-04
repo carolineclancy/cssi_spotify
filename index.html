@@ -30,6 +30,7 @@
       <th class="playlist_table_content">Artist Name</th>
       <th class="playlist_table_content">Votes of Song</th>
       <th></th>
+      {% set count = 0 %}
       {% for song_entry in songs %}
       <tr class="playlist_table_content" allowtransparency="true">
         <td>
@@ -39,11 +40,15 @@
         <td>{{song_entry.artist_name}}</td>
         <td>{{song_entry.votes_of_song}}</td>
         <td>
-            <img class = "vote_arrow" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif"><br>
-            <img class = "down_vote_arrow" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif">
-            <div type="hidden" name="song_url_key" value="{{ song_entry.key.urlsafe() }}"></div>
+            <div class = "rotate_vote"><img id="up_arrow-#{{count}}" class = "vote_arrow" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif"></div><br>
+            <img id="down_arrow-{{count}}" class = "vote_arrow" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif">
+            <!-- <form method = "post" id="song_key"> -->
+            <input id="key-{{count}}" class="key_list" type = "hidden" name="song_url_key" value="{{ song_entry.key.urlsafe() }}"/>
+            <!-- <input type = "submit" />
+          </form> -->
         </td>
       </tr>
+      {% set count = count + 1 %}
       <!-- <hr class = "line_length"/> -->
       {% endfor %}
     </table>
