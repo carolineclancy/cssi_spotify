@@ -1,14 +1,7 @@
 $(document).ready(function(){
-  $(".rotate_vote").click(function(event){
+
+  $(".rotate_vote").click(function upVote(event){
     console.log('click');
-      // var input_key = null;
-      // var i=0;
-      // $('.key_list').each(function(){
-      //     i++;
-      //     var newID='key'+i;
-      //     $(this).attr('id',newID);
-      //     input_key = $(this).val();
-      // });
       var event_id = event.target.id;
       var id_number = event_id.substring(event_id.indexOf("#")+1);
       var input_item = String('#'+'key-'+id_number);
@@ -21,19 +14,14 @@ $(document).ready(function(){
         }).fail(function(e) {
           console.log(e);
       });
-      $(".votes_of_song").show();
+      var votes = $(this).closest('tr').find('td.votes_of_song');
+      var count = parseInt(votes.html(),10)+1;
+      votes.html(count);
     });
+
 
     $(".down_vote_arrow").click(function(event){
       console.log('click');
-        // var input_key = null;
-        // var i=0;
-        // $('.key_list').each(function(){
-        //     i++;
-        //     var newID='key'+i;
-        //     $(this).attr('id',newID);
-        //     input_key = $(this).val();
-        // });
         var event_id = event.target.id;
         var id_number = event_id.substring(event_id.indexOf("#")+1);
         var input_item = String('#'+'key-'+id_number);
@@ -46,5 +34,8 @@ $(document).ready(function(){
           }).fail(function(e) {
             console.log(e);
         });
+        var votes = $(this).closest('tr').find('td.votes_of_song');
+        var count = parseInt(votes.html(),10)-1;
+        votes.html(count);
       });
 });
