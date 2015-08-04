@@ -9,6 +9,7 @@
   </head>
   <body>
     <!-- This is the navigation bar and all of its tabs -->
+    <p id="header">Jam</p>
     <div id="navbar">
       <a href="/">
         <div class="tabs">
@@ -22,7 +23,7 @@
       </a>
       <a href="/about_us">
         <div class="tabs">
-          &nbsp;&nbsp;&nbsp;About Us&nbsp;&nbsp;&nbsp;
+          About Us
         </div>
       </a>
       <div class="tabs">
@@ -31,23 +32,21 @@
     </div>
     <!-- This is the playlist -->
     <table class = "playlist_table">
-      <th class="playlist_table_content_th"></th>
-      <th class="playlist_table_content_th">Song Name</th>
-      <th class="playlist_table_content_th">Artist Name</th>
-      <th class="playlist_table_content_th">Votes of Song</th>
-      <th></th>
+      <th class="table_header"></th>
+      <th class="table_header">Song Name</th>
+      <th class="table_header">Artist Name</th>
+      <th id="votes_header">Votes of Song</th>
+      <th id="blank_space"></th>
       {% set count = 0 %}
       {% for song_entry in songs %}
-      <tr class="playlist_table_content" allowtransparency="true">
-
-      <tr>
+      <tr allowtransparency="true">
         <td class="playlist_table_content">
-          <iframe src="{{"https://embed.spotify.com/?uri={}".format(song_entry.iframe_id)}}" width="500" height="80" frameborder="0" allowtransparency="true"></iframe>
+          <iframe src="{{"https://embed.spotify.com/?uri={}".format(song_entry.iframe_id)}}" width="300" height="80" frameborder="0" allowtransparency="true"></iframe>
         </td>
-        <td>{{song_entry.song_name}}</td>
-        <td>{{song_entry.artist_name}}</td>
-        <td class = "votes_of_song">{{song_entry.votes_of_song}}</td>
-        <td>
+        <td class="playlist_table_content">{{song_entry.song_name}}</td>
+        <td class="playlist_table_content">{{song_entry.artist_name}}</td>
+        <td class = "votes_column">{{song_entry.votes_of_song}}</td>
+        <td id="arrow_column">
             <div class = "rotate_vote"><img id="up_arrow-#{{count}}" class = "vote_arrow" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif"></div><br>
             <div class = "down_vote_arrow"><img id="down_arrow-#{{count}}" class = "vote_arrow" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif"></div>
             <!-- <form method = "post" id="song_key"> -->

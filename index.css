@@ -4,6 +4,14 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 
+#header {
+  font-size: 75px;
+  text-align: center;
+  line-height: 0px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
 /* This is the container that holds the tabs of the navigation bar or basically the navigation bar. */
 #navbar {
   border: 1px #191919 solid;
@@ -31,17 +39,19 @@ body {
   color: #A0A09C;
 }
 
-
+/* This rotates the arrow */
 .rotate_vote {
   transform: rotate(180deg);
 }
 
+/* Jack what does this do? */
 .vote_arrow {
   cursor:pointer;
   width:50px;
   height:50px;
 }
 
+/* How Caroline made the circle around the arrow */
 .vote_arrow:hover {
     background-color:#000;
     opacity:0.5;
@@ -50,15 +60,15 @@ body {
 
 /* The container that holds all the songs and is basically the playlist */
 .playlist_table {
-  border-spacing: 0;
+  border-spacing: 2px;
   text-align: center;
   margin: 20px 12px 10px 10px;
 }
 
 /* The first row of the table, with the exception of the voting and the blank space */
-.playlist_table_th {
-  padding-top: 8px;
-  width: 25.05%;
+.table_header {
+  padding: 2px;
+  width: 25.215%;
   background-color: #272727;
 }
 
@@ -68,25 +78,25 @@ body {
 }
 
 /* The voting box in the first row */
-.playlist_table_th_vote {
-  padding-top: 4px;
-  width: 20%;
+#votes_header {
+  padding: 2px;
+  width: 20.75%;
   background-color: #272727;
 }
 
 /* The column under the voting box */
-.playlist_table_content_vote {
+.votes_column {
   background-color: #272727;
 }
 
 /* The blank space box in the first row */
-.playlist_table_th_arrow {
+#blank_space {
   width: 10%;
   background-color: #272727;
 }
 
 /* The column under the blank space or where the broken arrows are */
-#arrow_layout {
+#arrow_column {
   padding: 5px;
   background-color: #272727;
 }
@@ -105,7 +115,7 @@ body {
   margin: 0px 0px 4px 4px
 }
 
-
+/* I'm guessing this is the Spotify Button to add songs */
 #add_song_button {
   background: #649000;
   width: 100px;
