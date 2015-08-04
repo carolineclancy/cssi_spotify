@@ -8,27 +8,33 @@
     <title>Pick a song!</title>
   </head>
   <body>
+    <!-- This is the navigation bar and all of its tabs -->
     <div id="navbar">
       <a href="/">
-        <div class="tabs">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Home&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+        <div class="tabs">
+          Home
+        </div>
       </a>
       <a href="/add_song">
         <div class="tabs">
-        &nbsp;&nbsp;Add a Song&nbsp;&nbsp;
+        Add a Song
+        </div>
+      </a>
+      <a href="/about_us">
+        <div class="tabs">
+          &nbsp;&nbsp;&nbsp;About Us&nbsp;&nbsp;&nbsp;
         </div>
       </a>
       <div class="tabs">
-        &nbsp;&nbsp;&nbsp;About Us&nbsp;&nbsp;&nbsp;
-      </div>
-      <div class="tabs">
-        About our Site
+        About our Site&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <!-- Ignore this, these are just spaces to have this tab align with the voting column. -->
       </div>
     </div>
+    <!-- This is the playlist -->
     <table class = "playlist_table">
-      <th class="playlist_table_content"></th>
-      <th class="playlist_table_content">Song Name</th>
-      <th class="playlist_table_content">Artist Name</th>
-      <th class="playlist_table_content">Votes of Song</th>
+      <th class="playlist_table_content_th"></th>
+      <th class="playlist_table_content_th">Song Name</th>
+      <th class="playlist_table_content_th">Artist Name</th>
+      <th class="playlist_table_content_th">Votes of Song</th>
       <th></th>
       {% set count = 0 %}
       {% for song_entry in songs %}
@@ -41,7 +47,7 @@
         <td>{{song_entry.votes_of_song}}</td>
         <td>
             <div class = "rotate_vote"><img id="up_arrow-#{{count}}" class = "vote_arrow" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif"></div><br>
-            <img id="down_arrow-{{count}}" class = "vote_arrow" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif">
+            <img id="down_arrow-#{{count}}" class = "vote_arrow" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif">
             <!-- <form method = "post" id="song_key"> -->
             <input id="key-{{count}}" class="key_list" type = "hidden" name="song_url_key" value="{{ song_entry.key.urlsafe() }}"/>
             <!-- <input type = "submit" />

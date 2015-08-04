@@ -32,18 +32,22 @@ class AddSongs(ndb.Model):
     search_q = ndb.StringProperty(required=False)
     iframe_id = ndb.StringProperty(required=True)
 
+
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         #get database songs
-        entry_query = AddSongs.query()
+        entry_query = AddSongs.query().order(-AddSongs.votes_of_song)
+
         entry_data = entry_query.fetch()
         #spotify
-
+        # searches spotify for the song a user searched
         spotify_data_source = urlfetch.fetch("https://api.spotify.com/v1/search?q={}&type=track&limit=1".format(AddSongs.search_q))
         spotify_json_content = spotify_data_source.content
         parsed_spotify_dictionary = json.loads(spotify_json_content)
+
         template = JINJA_ENVIRONMENT.get_template('index.html')
         self.response.write(template.render({'songs':entry_data, 'spotify':parsed_spotify_dictionary}))
+
     def post(self):
         #voting system
         song_vote_count = self.request.get('vote')
@@ -87,6 +91,12 @@ class AddSongHandler(webapp2.RequestHandler):
         self.response.write(template.render({'spotify':parsed_spotify_dictionary}))
         self.redirect('/')
 
+
+class AboutUs(webapp2.RequestHandler):
+    def get(self):
+        template = JINJA_ENVIRONMENT.get_template('about_us.html')
+        self.response.write(template.render())
+
 # class ChooseSongHandler(webapp2.RequestHandler):
 #     def get(self):
 #         search_term = self.request.get('search_term')
@@ -121,5 +131,7 @@ class AddSongHandler(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/add_song', AddSongHandler),
-    # ('/choose', ChooseSongHandler)
+    # ('/choose', ChooseSongHandler),
+    ('/about_us', AboutUs)
+
 ], debug=True)
