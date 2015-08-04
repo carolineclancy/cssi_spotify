@@ -14,7 +14,7 @@ $(document).ready(function(){
         }).fail(function(e) {
           console.log(e);
       });
-      var votes = $(this).closest('tr').find('td.votes_of_song');
+      var votes = $(this).closest('tr').find('td.votes_column');
       var count = parseInt(votes.html(),10)+1;
       votes.html(count);
     });
@@ -34,7 +34,7 @@ $(document).ready(function(){
           }).fail(function(e) {
             console.log(e);
         });
-        var votes = $(this).closest('tr').find('td.votes_of_song');
+        var votes = $(this).closest('tr').find('td.votes_column');
         var count = parseInt(votes.html(),10)-1;
         votes.html(count);
       });
