@@ -8,46 +8,46 @@
     <title>Pick a song!</title>
   </head>
   <body>
+    <!-- This is the navigation bar and all of its tabs -->
     <div id="navbar">
       <a href="/">
-        <div class="tabs">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Home&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+        <div class="tabs">
+          Home
+        </div>
       </a>
       <a href="/add_song">
         <div class="tabs">
-        &nbsp;&nbsp;Add a Song&nbsp;&nbsp;
+        Add a Song
         </div>
       </a>
       <div class="tabs">
-        &nbsp;&nbsp;&nbsp;About Us&nbsp;&nbsp;&nbsp;
+        About Us
       </div>
       <div class="tabs">
-        About our Site
+        About our Site&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <!-- Ignore this, these are just spaces to have this tab align with the voting column. -->
       </div>
     </div>
+    <!-- This is the playlist -->
     <table class = "playlist_table">
-      <th class="playlist_table_content"></th>
-      <th class="playlist_table_content">Song Name</th>
-      <th class="playlist_table_content">Artist Name</th>
-      <th class="playlist_table_content">Votes of Song</th>
-      <th></th>
 
-
-
+      <th class="playlist_table_th"></th>
+      <th class="playlist_table_th">Song Name</th>
+      <th class="playlist_table_th">Artist Name</th>
+      <th class="playlist_table_th_vote">Votes of Song</th>
+      <th class="playlist_table_th_arrow"></th>
       {% for song_entry in songs %}
-
 
       <tr class="playlist_table_content" allowtransparency="true">
       <tr>
-        <td>
-
+        <td class="playlist_table_content">
           <iframe src="{{"https://embed.spotify.com/?uri={}".format(song_entry.iframe_id)}}" width="300" height="80" frameborder="0" allowtransparency="true"></iframe>
-
         </td>
 
-        <td>{{song_entry.song_name}}</td>
-        <td>{{song_entry.artist_name}}</td>
-        <td>{{song_entry.votes_of_song}}</td>
-        <td>
+        <td class="playlist_table_content">{{song_entry.song_name}}</td>
+        <td class="playlist_table_content">{{song_entry.artist_name}}</td>
+        <td class="playlist_table_content_vote">{{song_entry.votes_of_song}}</td>
+        <td id="arrow_layout">
+
           <form method="post" action="/">
             <input type = "radio" name="vote" value="1"><img class = "arrow_size" id = "vote_arrow" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif"><br>
             <input type = "radio" name="vote" value = "-1"><img class = "arrow_size" id = "down_vote_arrow" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif">
