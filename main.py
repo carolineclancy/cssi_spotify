@@ -107,6 +107,6 @@ class AboutUs(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
-    ('/add_song', AddSongHandler)
+    ('/add_song', AddSongHandler),
     ('/about_us', AboutUs)
 ], debug=True)
