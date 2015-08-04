@@ -1,21 +1,21 @@
-
 body {
   background-color: #191919;
-  color: white;
+  color: #A0A09C;
   font-family: 'Montserrat', sans-serif;
 }
 
+/* This is the container that holds the tabs of the navigation bar or basically the navigation bar. */
 #navbar {
-  border: 1px black solid;
+  border: 1px #191919 solid;
   margin: 10px 10px 10px 10px;
   padding: 0;
   width: 99%;
   height: 50px;
-
 }
 
+/* These are the tabs for the navigation bar. */
 .tabs {
-  padding: 15px 10px 10px 130px;
+  padding: 15px 70px 10px 70px;
   background-color: #474747;
   color: black;
   float: left;
@@ -23,38 +23,74 @@ body {
   border: #191919 solid 1px;
   height: 25px;
   width: 14.75%;
+  text-align: center;
 }
 
 .tabs:hover {
-  background-color: blue;
-  color: white;
+  background-color: #004200;
+  color: #A0A09C;
 }
 
+/* This is the css for the whichever arrow needed rotating */
 #vote_arrow {
   transform: rotate(180deg);
 }
 
+/* Made the arrows not so huge */
 .arrow_size {
   width:50px;
   height:50px;
 }
 
+/* The container that holds all the songs and is basically the playlist */
 .playlist_table {
-  border-spacing: 10px;
+  border-spacing: 0;
   text-align: center;
-  margin: 20px 0px 10px 11px;
+  margin: 20px 12px 10px 10px;
 }
 
+/* The first row of the table, with the exception of the voting and the blank space */
+.playlist_table_th {
+  padding-top: 8px;
+  width: 25.05%;
+  background-color: #272727;
+}
+
+/* The columns for each title except voting and the blank space */
 .playlist_table_content {
-  width: 31.25%;
-  background-color: #303030;
+  background-color: #272727;
 }
 
+/* The voting box in the first row */
+.playlist_table_th_vote {
+  padding-top: 4px;
+  width: 20%;
+  background-color: #272727;
+}
+
+/* The column under the voting box */
+.playlist_table_content_vote {
+  background-color: #272727;
+}
+
+/* The blank space box in the first row */
+.playlist_table_th_arrow {
+  width: 10%;
+  background-color: #272727;
+}
+
+/* The column under the blank space or where the broken arrows are */
+#arrow_layout {
+  background-color: #272727;
+}
+
+/* The invisible box holding the add song bar and submit button */
 #add_song_container {
   font-family:Courier;
   margin-left: 11px;
 }
 
+/* All of the children of add_song_container */
 #add_song_container * {
   margin-bottom: 1px;
 }
