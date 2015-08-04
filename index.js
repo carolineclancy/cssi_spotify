@@ -21,9 +21,10 @@ $(document).ready(function(){
         }).fail(function(e) {
           console.log(e);
       });
+      $(".votes_of_song").show();
     });
 
-    $(".vote_arrow").click(function(event){
+    $(".down_vote_arrow").click(function(event){
       console.log('click');
         // var input_key = null;
         // var i=0;

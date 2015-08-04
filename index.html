@@ -44,10 +44,10 @@
         </td>
         <td>{{song_entry.song_name}}</td>
         <td>{{song_entry.artist_name}}</td>
-        <td>{{song_entry.votes_of_song}}</td>
+        <td class = "votes_of_song">{{song_entry.votes_of_song}}</td>
         <td>
             <div class = "rotate_vote"><img id="up_arrow-#{{count}}" class = "vote_arrow" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif"></div><br>
-            <img id="down_arrow-#{{count}}" class = "vote_arrow" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif">
+            <div class = "down_vote_arrow"><img id="down_arrow-#{{count}}" class = "vote_arrow" src="http://www.clipartbest.com/cliparts/dc8/GMg/dc8GMggce.gif"></div>
             <!-- <form method = "post" id="song_key"> -->
             <input id="key-{{count}}" class="key_list" type = "hidden" name="song_url_key" value="{{ song_entry.key.urlsafe() }}"/>
             <!-- <input type = "submit" />
