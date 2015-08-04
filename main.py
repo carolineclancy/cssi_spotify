@@ -104,7 +104,6 @@ class AddSongHandler(webapp2.RequestHandler):
 
 class AboutUs(webapp2.RequestHandler):
     template = JINJA_ENVIRONMENT.get_template('about_us.html')
-    self.redirect('/')
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
