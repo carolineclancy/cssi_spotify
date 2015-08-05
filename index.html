@@ -16,7 +16,7 @@
     <!-- This is the navigation bar and all of its tabs -->
     <div id="navbar">
       <a href="/">
-        <div class="tabs">
+        <div class="tabs_first">
           Home
         </div>
       </a>
@@ -30,11 +30,10 @@
           About Us
         </div>
       </a>
-      <div class="tabs">
+      <div class="tabs_last">
         About our Site
       </div>
     </div>
-
   <p hidden>
     {% for song_entry in songs %}
       {{iframes_var.append("{},".format(song_entry.iframe_id[14:]))}}
