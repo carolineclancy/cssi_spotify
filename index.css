@@ -141,7 +141,12 @@ h2 {
 
 #add_song_button:hover {
   background: #82BD03;
+  cursor: pointer;
 }
+#add_song_button:focus {
+  outline: 0;
+}
+
 
 #invisible_button{
   display: none;
