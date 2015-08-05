@@ -17,24 +17,25 @@ h2 {
 
 #header {
   font-size: 75px;
-  text-align: center;
   line-height: 0px;
-  margin-top: 50px;
-  margin-bottom: 50px;
+  margin: 37.5px 0px 37.5px 0px;
+  width: 74.5%;
+  float: left;
+  display: inline-block;
+  text-align: center;
 }
 
 #login_button {
   padding: 35px 70px 35px 70px;
   background-color: #474747;
   color: black;
-  position: absolute;
-  top: 1%;
-  right: 1.5%;
+  float:left;
   margin: 0;
   border: #191919 solid 1px;
   height: 22px;
   width: 14.4%;
   text-align: center;
+  border-radius: 20px;
 }
 
 /* This is the container that holds the tabs of the navigation bar or basically the navigation bar. */
@@ -170,6 +171,7 @@ h2 {
   width: 23%;
   padding: 10px;
   text-align: center;
+  border-radius: 20px;
 }
 
 /* This is the song bar to add songs */
