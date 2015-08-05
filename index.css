@@ -55,7 +55,7 @@ h2 {
   transform: rotate(180deg);
 }
 
-/* Jack what does this do? */
+/* This is the arrow image */
 .vote_arrow {
   cursor:pointer;
   width:50px;
@@ -122,6 +122,7 @@ h2 {
   text-align: center;
 }
 
+/* This is the song bar to add songs */
 #add_song_content {
   margin: 0px 0px 4px 4px
 }
@@ -135,7 +136,9 @@ h2 {
   border: 0;
   font-family: 'Montserrat', sans-serif;
   color: white;
+  margin: 4px 0px 0px 30px;
 }
+
 #add_song_button:hover {
   background: #82BD03;
 }

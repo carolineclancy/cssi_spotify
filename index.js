@@ -14,11 +14,12 @@ $(document).ready(function(){
         }).fail(function(e) {
           console.log(e);
       });
+
       var votes = $(this).closest('tr').find('td.votes_column');
       var count = parseInt(votes.html(),10)+1;
       votes.html(count);
-    });
 
+});
 
     $(".down_vote_arrow").click(function(event){
       console.log('click');
@@ -38,4 +39,18 @@ $(document).ready(function(){
         var count = parseInt(votes.html(),10)-1;
         votes.html(count);
       });
+
+    //   $(function(){
+    //       // don't cache ajax or content won't be fresh
+    //       $.ajaxSetup ({
+    //           cache: false
+    //       });
+    //       // load() functions
+    //       var loadUrl = "http://localhost:8080/";
+    //       $("#blank_space").click(function(){
+    //           $(".votes_of_song").load(loadUrl);
+    //       });
+    //
+    //   // end
+    // });
 });
