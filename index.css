@@ -23,6 +23,20 @@ h2 {
   margin-bottom: 50px;
 }
 
+#login_button {
+  padding: 35px 70px 35px 70px;
+  background-color: #474747;
+  color: black;
+  position: absolute;
+  top: 1%;
+  right: 1.5%;
+  margin: 0;
+  border: #191919 solid 1px;
+  height: 22px;
+  width: 14.4%;
+  text-align: center;
+}
+
 /* This is the container that holds the tabs of the navigation bar or basically the navigation bar. */
 #navbar {
   border: 1px #191919 solid;
@@ -143,10 +157,10 @@ h2 {
   background: #82BD03;
   cursor: pointer;
 }
+
 #add_song_button:focus {
   outline: 0;
 }
-
 
 #invisible_button{
   display: none;
