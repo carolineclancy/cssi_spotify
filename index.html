@@ -30,22 +30,44 @@
         About our Site&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <!-- Ignore this, these are just spaces to have this tab align with the voting column. -->
       </div>
     </div>
+
+  <p hidden>
+    {% for song_entry in songs %}
+      {{iframes_var.append("{},".format(song_entry.iframe_id[14:]))}}
+    {%endfor%}
+
+  {%if iframes_var != []%}
+    {% for iframes in iframes_var %}
+      {{ iframes|replace(",", "") }}
+    {% endfor %}
+    {{iframes_var[-1]|replace(",", "")}}
+    {{iframes_var[0:]|replace(",", "")}}
+    {{iframes_var[-1]|replace(" ", "")}}
+  {%endif%}
+
+  {% set iframes_var = iframes_var|join('') %}
+</p>
+<h2> Open Playlist in Spotify </h2>
+  <iframe id="spotify_playlist" src="{{"https://embed.spotify.com/?uri=spotify:trackset:Jam:{}".format(iframes_var[:-1])}}" width="300" height="80" frameborder="0" allowtransparency="true"></iframe>
+
+
     <!-- This is the playlist -->
     <table class = "playlist_table">
       <th class="table_header"></th>
       <th class="table_header">Song Name</th>
       <th class="table_header">Artist Name</th>
       <th id="votes_header">Votes of Song</th>
+
       <th id="blank_space">Vote!</th>
       {% set count = 0 %}
       {% for song_entry in songs %}
       <tr allowtransparency="true">
-
         <td class="playlist_table_content">
-          <iframe src="{{"https://embed.spotify.com/?uri={}".format(song_entry.iframe_id)}}" width="300" height="80" frameborder="0" allowtransparency="true"></iframe>
+          <iframe src="{{"https://embed.spotify.com/?uri=spotify:track:{}".format(song_entry.iframe_id)}}" width="300" height="80" frameborder="0" allowtransparency="true"></iframe>
         </td>
+
         <td class="playlist_table_content">{{song_entry.song_name}}</td>
-        <td class="playlist_table_content">{{song_entry.artist_name}}</td>
+        <td class="playlist_table_content">{{song_entry.artist}}</td>
         <td class = "votes_column">{{song_entry.votes_of_song}}</td>
         <td id="arrow_column">
             <div class = "rotate_vote"><img id="up_arrow-#{{count}}" class = "vote_arrow" src="/images/arrow.gif"></div><br>
