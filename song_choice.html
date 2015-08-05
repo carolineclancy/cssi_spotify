@@ -8,12 +8,12 @@
     <title>Pick a song!</title>
   </head>
   <body>
-
-
+    {% set counter = 0 %}
   <form method="post">
   {% for song in spotify["tracks"]["items"] %}
-    <input name="song_choice" type="radio" value="song.search_q"><iframe src="{{"https://embed.spotify.com/?uri=spotify:track:{}".format(song["uri"])}}" width="300" height="80" frameborder="0" allowtransparency="true"></iframe></input>
+    <input name="song_choice" type="radio" value="{{spotify["tracks"]["items"][counter]}}"><iframe src="{{"https://embed.spotify.com/?uri=spotify:track:{}".format(song["uri"])}}" width="300" height="80" frameborder="0" allowtransparency="true"></iframe></input>
     <br>
+    {% set counter = counter + 1 %}
   {% endfor %}
     <input type="submit"></input>
   </form>

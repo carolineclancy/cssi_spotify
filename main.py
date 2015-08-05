@@ -20,6 +20,8 @@ import os
 import jinja2
 import json
 from google.appengine.api import urlfetch
+import ast
+
 
 urlfetch.set_default_fetch_deadline(45)
 # iframes_var = []
@@ -36,6 +38,8 @@ class AddSongs(ndb.Model):
     iframe_id = ndb.StringProperty(required=True)
     artist = ndb.StringProperty(required=True)
     iframes_var = ndb.StringProperty(repeated=True)
+    date = ndb.DateTimeProperty(auto_now_add=True)
+    special = ndb.StringProperty(required=False)
 
 
 class MainHandler(webapp2.RequestHandler):
@@ -88,17 +92,23 @@ class AddSongHandler(webapp2.RequestHandler):
         search_term = self.request.get('search_term')
         search_q = search_term.replace(" ", "+")
         votes_of_song = 0
+
         spotify_data_source = urlfetch.fetch("https://api.spotify.com/v1/search?q={}&type=track&limit=10".format(search_q))
         spotify_json_content = spotify_data_source.content
         parsed_spotify_dictionary = json.loads(spotify_json_content)
         spotify = parsed_spotify_dictionary
-        iframe_id = spotify["tracks"]["items"][0]["uri"]
-        iframes_var = []
 
-        artist = spotify["tracks"]["items"][0]["artists"][0]["name"]
-        song_name = spotify["tracks"]["items"][0]["name"]
-        added_song = AddSongs(song_name = song_name, votes_of_song = votes_of_song, search_q= search_q, iframe_id=iframe_id, artist=artist, iframes_var=iframes_var)
-        added_song.put()
+        iframes_var = []
+        counter = 0
+        for song in spotify["tracks"]["items"]:
+            iframe_id = spotify["tracks"]["items"][counter]["uri"]
+
+            artist = spotify["tracks"]["items"][counter]["artists"][0]["name"]
+            song_name = spotify["tracks"]["items"][counter]["name"]
+            added_song = AddSongs(song_name = song_name, votes_of_song = votes_of_song, search_q= search_q, iframe_id=iframe_id, artist=artist, iframes_var=iframes_var)
+            added_song.put()
+            counter += 1
+        iframes_var = []
 
         template = JINJA_ENVIRONMENT.get_template('song_choice.html')
         self.response.write(template.render({'spotify':parsed_spotify_dictionary, 'iframes_var':iframes_var, 'search_q':search_q}))
@@ -106,37 +116,68 @@ class AddSongHandler(webapp2.RequestHandler):
 
 class ChooseSongHandler(webapp2.RequestHandler):
     def get(self):
-        search_term = self.request.get('song_choice')
+        song_choice = self.request.get('song_choice')
 
-        entry_query = AddSongs.query().order(-AddSongs.votes_of_song)
+        entry_query = AddSongs.query().order(-AddSongs.date)
         entry_data = entry_query.fetch()
 
         spotify_data_source = urlfetch.fetch("https://api.spotify.com/v1/search?q={}&type=track&limit=10".format(entry_data[0].search_q))
         spotify_json_content = spotify_data_source.content
         parsed_spotify_dictionary = json.loads(spotify_json_content)
 
+        spotify = parsed_spotify_dictionary
+
         template = JINJA_ENVIRONMENT.get_template('song_choice.html')
-        self.response.write(template.render({'spotify':parsed_spotify_dictionary}))
+        self.response.write(template.render({'spotify':spotify}))
     def post(self):
-        entry_query = AddSongs.query().order(-AddSongs.votes_of_song)
-        entry_data = entry_query.fetch()
+        song_choice = self.request.get('song_choice')
+        song_choice = ast.literal_eval(song_choice)
+        song_choice1 = song_choice['name']
+
+        song_choice1 = song_choice1.replace(" ", "+")
+
         votes_of_song = 0
-        spotify_data_source = urlfetch.fetch("https://api.spotify.com/v1/search?q={}&type=track&limit=10".format(entry_data[0].search_q))
+        # spotify_data_source = urlfetch.fetch("https://api.spotify.com/v1/search?q={}&type=track&limit=1".format(song_choice1))
+        # spotify_json_content = spotify_data_source.content
+        # parsed_spotify_dictionary = json.loads(spotify_json_content)
+        # spotify = parsed_spotify_dictionary
+
+
+        spotify_data_source = urlfetch.fetch("https://api.spotify.com/v1/search?q={}&type=track&limit=1".format(song_choice1))
         spotify_json_content = spotify_data_source.content
         parsed_spotify_dictionary = json.loads(spotify_json_content)
         spotify = parsed_spotify_dictionary
-
-
-        iframe_id = spotify["tracks"]["items"][0]["uri"]
+        iframe_id = song_choice["uri"]
         iframes_var = []
 
-        artist = spotify["tracks"]["items"][0]["artists"][0]["name"]
-        song_name = spotify["tracks"]["items"][0]["name"]
-        added_song = AddSongs(song_name = song_name, votes_of_song = votes_of_song, search_q= search_q, iframe_id=iframe_id, artist=artist, iframes_var=iframes_var)
+
+        artist = song_choice["artists"][0]["name"]
+        song_name = song_choice["name"]
+        added_song = AddSongs(song_name = song_name, votes_of_song = votes_of_song, iframe_id=iframe_id, artist=artist, iframes_var=iframes_var)
         added_song.put()
 
+        entry_query = AddSongs.query().order(-AddSongs.date)
+        entry_data = entry_query.fetch(11)
+
+        counter = 0
+        for song in entry_data:
+            if song.iframe_id != song_choice["uri"]:
+                entry_data[counter].key.delete()
+            counter += 1
+
+
+
+        #
+        # iframe_id = spotify["tracks"]["items"][0]["uri"]
+        # iframes_var = []
+        #
+        # artist = spotify["tracks"]["items"][0]["artists"][0]["name"]
+        # song_name = spotify["tracks"]["items"][0]["name"]
+        # added_song = AddSongs(song_name = song_name, votes_of_song = votes_of_song, iframe_id=iframe_id, artist=artist, iframes_var=iframes_var)
+        # added_song.put()
+
         template = JINJA_ENVIRONMENT.get_template('index.html')
-        self.response.write(template.render({'spotify':parsed_spotify_dictionary, 'iframes_var':iframes_var}))
+        self.response.write(template.render({'spotify':parsed_spotify_dictionary, 'iframes_var':iframes_var, 'song_choice':song_choice}))
         self.redirect('/')
 class AboutUs(webapp2.RequestHandler):
     def get(self):
