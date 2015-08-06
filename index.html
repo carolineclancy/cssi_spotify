@@ -10,11 +10,12 @@
   </head>
   <body>
     <p id="header">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jam</p>
-    <div id="login_button">
-      Login | Register
-    </div>
+    {% if logout != "" %}
+      <a href="{{logout}}"><div id="login_button">Logout</div></a>
+    {% else %}
+      <a href="{{login}}"><div id="login_button">Log in through Gmail</div></a>
+    {% endif %}
     <!-- This is the navigation bar and all of its tabs -->
-
     <div id="navbar">
       <a href="/">
         <div class="tabs_first">
@@ -35,11 +36,6 @@
         About our Site
       </div>
     </div>
-    {% if logout != "" %}
-      <a href="{{logout}}"> Logout </a>
-    {% else %}
-      <a href="{{login}}"> Log in through Gmail </a>
-    {% endif %}
   <p hidden>
     {% for song_entry in songs %}
       {{iframes_var.append("{},".format(song_entry.iframe_id[14:]))}}

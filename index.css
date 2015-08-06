@@ -38,6 +38,11 @@ h2 {
   border-radius: 20px;
 }
 
+#login_button:hover {
+  background-color: #004200;
+  color: #A0A09C;
+}
+
 /* This is the container that holds the tabs of the navigation bar or basically the navigation bar. */
 #navbar {
   border: 1px #191919 solid;
