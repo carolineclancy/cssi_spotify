@@ -10,7 +10,9 @@ $(document).ready(function(){
       var that = this;
       $.post("http://localhost:8080/", {"vote":1, "song_url_key":input_key} ,
         function(returnedData){
-          if(returnedData === "Vote Success"){
+          if(returnedData === "Vote Failed"){
+            return;
+          }else{
             var votes = $(that).closest('tr').find('td.votes_column');
             var count = parseInt(votes.html(),10)+1;
             votes.html(count);
@@ -32,12 +34,14 @@ $(document).ready(function(){
         console.log(id_number);
         $.post("http://localhost:8080/", {"vote":-1, "song_url_key":input_key} ,
           function(returnedData){
-            if(returnedData === "Vote Success"){
+            if(returnedData === "Vote Failed"){
+              return;
+            }else{
               var votes = $(that).closest('tr').find('td.votes_column');
+              console.log('voted');
               var count = parseInt(votes.html(),10)-1;
               votes.html(count);
             }
-              console.log(returnedData);
           }).fail(function(e) {
             console.log(e);
         });

@@ -83,6 +83,7 @@ class MainHandler(webapp2.RequestHandler):
         if user == None:
             self.response.out.write("Vote Failed")
             return
+        self.response.out.write('Vote Success')
         #voting system
         song_vote_count = self.request.get('vote')
         song_url_key = self.request.get('song_url_key')
@@ -96,7 +97,7 @@ class MainHandler(webapp2.RequestHandler):
         parsed_spotify_dictionary = json.loads(spotify_json_content)
         template = JINJA_ENVIRONMENT.get_template('index.html')
         iframes_var = []
-        self.response.out.write('Vote Success')
+
         self.response.write(template.render({'spotify':parsed_spotify_dictionary, 'iframes_var':iframes_var}))
         self.redirect('/')
 
