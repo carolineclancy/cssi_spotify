@@ -8,10 +8,13 @@ $(document).ready(function(){
       var input_key = $(input_item).val();
       console.log(id_number);
       var that = this;
-      $.post("http://localhost:8080/", {"vote":1, "song_url_key":input_key} ,
+      $.post("/", {"vote":1, "song_url_key":input_key} ,
         function(returnedData){
           if(returnedData === "Vote Failed"){
+            alert("You need to be logged in to vote!");
             return;
+          }else if(returnedData === "Double Vote Failed"){
+            alert("You can't double vote!")
           }else{
             var votes = $(that).closest('tr').find('td.votes_column');
             var count = parseInt(votes.html(),10)+1;
@@ -32,10 +35,13 @@ $(document).ready(function(){
         var input_key = $(input_item).val();
         var that = this;
         console.log(id_number);
-        $.post("http://localhost:8080/", {"vote":-1, "song_url_key":input_key} ,
+        $.post("/", {"vote":-1, "song_url_key":input_key} ,
           function(returnedData){
             if(returnedData === "Vote Failed"){
+              alert("You need to be logged in to vote!");
               return;
+            }else if(returnedData === "Double Vote Failed"){
+              alert("You can't double vote!");
             }else{
               var votes = $(that).closest('tr').find('td.votes_column');
               console.log('voted');
