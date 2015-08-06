@@ -25,13 +25,11 @@ h2 {
   text-align: center;
 }
 
-
 .header2 {
   font-size: 75px;
   line-height: 0px;
-  margin: 37.5px 0px 37.5px 0px;
+  margin: 48px 0px 55.25px 0px;
   width: 74.5%;
-  display: block;
   text-align: center;
 }
 
@@ -181,10 +179,12 @@ h2 {
 /* The invisible box holding the add song bar and submit button */
 #add_song_container {
   font-family:Courier;
-  margin-left: 96px 10px 10px 12px;
+  margin: 0;
   background-color: #272727;
-  width: 23%;
-  padding: 10px;
+  padding: 10px 21px;
+  width: 130%;
+  position: relative;
+  right: 2%;
   text-align: center;
   border-radius: 20px;
   clear: both;
@@ -222,7 +222,7 @@ h2 {
 
 .bio {
   background-color: #272727;
-  margin: 100px 10px 8px 10px;
+  margin: 8px 10px 8px 10px;
   width: 98.5%;
   height: 200px;
   clear: both;
@@ -231,7 +231,7 @@ h2 {
 
 .other_bio {
   background-color: #272727;
-  margin: 7.5px 10px 7.5px 10px;
+  margin: 8px 10px 8px 10px;
   width: 98.5%;
   height: 200px;
   clear: both;
@@ -249,4 +249,14 @@ h2 {
 .bio_text {
   font-family: 'Montserrat', sans-serif;
   font-size: 18px;
+  padding: 10px 0px;
+}
+
+.cannot_add_song_text {
+  margin: 0px 10px 10px 12px;
+  background-color: #272727;
+  display: inline-block;
+  border-radius: 20px;
+  height: 25px;
+  padding: 0px 5px 25px 5px;
 }
