@@ -53,11 +53,14 @@ class MainHandler(webapp2.RequestHandler):
 
         #login
         user = users.get_current_user()
+        logout = ""
+        login = ""
+
         if user:
-            greeting = ("{}").format(users.create_logout_url('/logout'))
+            logout = ("{}").format(users.create_logout_url('/logout'))
             q = ndb.gql('SELECT * FROM Accounts WHERE ID = :1', user.user_id())
         else:
-            greeting = users.create_login_url('/register')
+            login = users.create_login_url('/register')
 
 
         #get database songs
@@ -73,7 +76,7 @@ class MainHandler(webapp2.RequestHandler):
         iframes_var = []
 
         template = JINJA_ENVIRONMENT.get_template('index.html')
-        self.response.write(template.render({'songs':entry_data, 'spotify':parsed_spotify_dictionary, 'iframes_var':iframes_var, 'greeting': greeting}))
+        self.response.write(template.render({'songs':entry_data, 'spotify':parsed_spotify_dictionary, 'iframes_var':iframes_var, 'logout': logout, "login": login}))
 
     def post(self):
         #voting system
