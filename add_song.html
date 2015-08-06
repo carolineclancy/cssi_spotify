@@ -7,10 +7,8 @@
     <link rel = "stylesheet" type = "text/css" href = "index.css">
   </head>
   <body>
-    <p id="header">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jam</p>
-    <div id="login_button">
-      Login | Register
-    </div>
+
+    <p class="header2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jam</p>
     <div id="navbar">
       <a href="/">
         <div class="tabs_first">
@@ -31,8 +29,10 @@
         About our Site
       </div>
     </div>
+    <div class="cannot_add_song_text">
     {% if user == None %}
       <p> You must <a href="{{login}}">log in</a> to add a song </p>
+    </div>
     {% else %}
       <form method="post">
         <div id="add_song_container">
