@@ -191,12 +191,12 @@ h2 {
   margin: 4px 0px 0px 15px;
 }
 
-#add_song_button:hover {
+.add_song_button:hover {
   background: #82BD03;
   cursor: pointer;
 }
 
-#add_song_button:focus {
+.add_song_button:focus {
   outline: 0;
 }
 

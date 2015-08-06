@@ -14,6 +14,7 @@
       Login | Register
     </div>
     <!-- This is the navigation bar and all of its tabs -->
+
     <div id="navbar">
       <a href="/">
         <div class="tabs_first">
@@ -34,6 +35,7 @@
         About our Site
       </div>
     </div>
+    <a href="{{greeting}}"> {{greeting}} </a>
   <p hidden>
     {% for song_entry in songs %}
       {{iframes_var.append("{},".format(song_entry.iframe_id[14:]))}}
@@ -51,11 +53,13 @@
   {% set iframes_var = iframes_var|join('') %}
 </p>
 <h2> Open Playlist in Spotify </h2>
-  <iframe id="spotify_playlist" src="{{"https://embed.spotify.com/?uri=spotify:trackset:Jam:{}".format(iframes_var[:-1])}}" width="300" height="80" frameborder="0" allowtransparency="true"></iframe>
+  <a class="add_song_button" target="_blank" style="text-decoration: none !important; padding:5px; text-align: center; display: block; margin-left: auto; margin-right: auto" href="{{"https://play.spotify.com/trackset/Jam/{}".format(iframes_var[:-1])}}">Open Playlist</a>
 
 
     <!-- This is the playlist -->
     <table class = "playlist_table">
+
+
       <th class="table_header"></th>
       <th class="table_header">Song Name</th>
       <th class="table_header">Artist Name</th>
