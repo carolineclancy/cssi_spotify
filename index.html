@@ -2,21 +2,21 @@
 <html>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="index.js"></script>
-<link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
- <link rel = "stylesheet" type = "text/css" href = "index.css">
   <head>
     <title>Jam</title>
-    <link rel="shortcut icon" type="image/png" href="images/record.png"/>
+    <link rel="shortcut icon" type="image/png" href="images/record.png">
+    <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+    <link rel = "stylesheet" type = "text/css" href = "index.css">
   </head>
   <body>
-    <p id="header">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jam</p>
+    <p class="header">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jam</p>
     {% if logout != "" %}
       <a href="{{logout}}"><div id="login_button">Logout</div></a>
     {% else %}
       <a href="{{login}}"><div id="login_button">Log in through Gmail</div></a>
     {% endif %}
     <!-- This is the navigation bar and all of its tabs -->
-    <div id="navbar">
+    <div class="navbar">
       <a href="/">
         <div class="tabs_first">
           Home

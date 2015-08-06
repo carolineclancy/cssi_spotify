@@ -235,6 +235,10 @@ class Logout(webapp2.RequestHandler):
         template = JINJA_ENVIRONMENT.get_template('logout.html')
         self.response.write(template.render())
 
+class AboutJam(webapp2.RequestHandler):
+    def get(self):
+        template = JINJA_ENVIRONMENT.get_template('about_jam.html')
+        self.response.write(template.render())
 
 
 app = webapp2.WSGIApplication([
@@ -244,5 +248,7 @@ app = webapp2.WSGIApplication([
     ('/about_us', AboutUs),
     ('/register', RegisterHandler),
     ('/woohoo', WooHoo),
-    ('/logout', Logout)
+    ('/logout', Logout),
+    ('/about_jam', AboutJam)
+
 ], debug=True)

@@ -15,13 +15,23 @@ h2 {
   margin-left: auto;
 }
 
-#header {
+.header {
   font-size: 75px;
   line-height: 0px;
   margin: 37.5px 0px 37.5px 0px;
   width: 74.5%;
   float: left;
   display: inline-block;
+  text-align: center;
+}
+
+
+.header2 {
+  font-size: 75px;
+  line-height: 0px;
+  margin: 37.5px 0px 37.5px 0px;
+  width: 74.5%;
+  display: block;
   text-align: center;
 }
 
