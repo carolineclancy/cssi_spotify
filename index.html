@@ -35,8 +35,11 @@
         About our Site
       </div>
     </div>
-
-      <a href="{{greeting}}"> {{greeting}} </a>
+    {% if logout != "" %}
+      <a href="{{logout}}"> Logout </a>
+    {% else %}
+      <a href="{{login}}"> Log in through Gmail </a>
+    {% endif %}
   <p hidden>
     {% for song_entry in songs %}
       {{iframes_var.append("{},".format(song_entry.iframe_id[14:]))}}
