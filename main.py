@@ -20,6 +20,7 @@ import os
 import jinja2
 import json
 from google.appengine.api import urlfetch
+from google.appengine.api import users
 
 urlfetch.set_default_fetch_deadline(45)
 # iframes_var = []
@@ -29,6 +30,11 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
+class Accounts(ndb.Model):
+    user = ndb.UserProperty(required=True)
+    ID = ndb.StringProperty(required=True)
+    user_name = ndb.StringProperty(required=True)
+
 class AddSongs(ndb.Model):
     song_name = ndb.StringProperty(required=True)
     votes_of_song = ndb.IntegerProperty(required=True)
@@ -37,12 +43,25 @@ class AddSongs(ndb.Model):
     artist = ndb.StringProperty(required=True)
     iframes_var = ndb.StringProperty(repeated=True)
 
-
 class MainHandler(webapp2.RequestHandler):
     def get(self):
+        #login
+        user = users.get_current_user()
+        if user:
+            greeting = ('Welcome, %s! (<a href="%s">sign out</a>)' %
+                        (user.nickname(), users.create_logout_url('/')))
+            q = ndb.gql('SELECT * FROM Accounts WHERE ID = :1', user.user_id())
+            userprefs = q.get()
+            # if userprefs:
+            #     self.redirect('/')
+            # else:
+            #     self.redirect('/register')
+        else:
+            greeting = ('<a href="%s">Sign in or register</a>.' %
+                        users.create_login_url('/register'))
+        self.response.out.write('<html><body>%s</body></html>' % greeting)
         #get database songs
         entry_query = AddSongs.query().order(-AddSongs.votes_of_song)
-
         entry_data = entry_query.fetch()
         #spotify
         # searches spotify for the song a user searched
@@ -58,6 +77,10 @@ class MainHandler(webapp2.RequestHandler):
 
     def post(self):
         #voting system
+        user = users.get_current_user()
+        if user == None:
+            self.response.out.write("Vote Failed")
+            return
         song_vote_count = self.request.get('vote')
         song_url_key = self.request.get('song_url_key')
         song_key = ndb.Key(urlsafe=song_url_key)
@@ -71,9 +94,8 @@ class MainHandler(webapp2.RequestHandler):
         template = JINJA_ENVIRONMENT.get_template('index.html')
         iframes_var = []
         counter = 0
+        self.response.out.write("Vote Success")
 
-        self.response.write(template.render({'spotify':parsed_spotify_dictionary, 'iframes_var':iframes_var, 'counter':counter}))
-        self.redirect('/')
 
 class AddSongHandler(webapp2.RequestHandler):
     def get(self):
@@ -97,31 +119,45 @@ class AddSongHandler(webapp2.RequestHandler):
         iframe_id = spotify["tracks"]["items"][0]["uri"]
         iframes_var = []
         counter = 0
-
-
         artist = spotify["tracks"]["items"][0]["artists"][0]["name"]
         song_name = spotify["tracks"]["items"][0]["name"]
         added_song = AddSongs(song_name = song_name, votes_of_song = votes_of_song, search_q= search_q, iframe_id=iframe_id, artist=artist, iframes_var=iframes_var)
         added_song.put()
-
         template = JINJA_ENVIRONMENT.get_template('index.html')
         self.response.write(template.render({'spotify':parsed_spotify_dictionary, 'iframes_var':iframes_var, 'counter':counter}))
         self.redirect('/')
 
-class RegisterHandler(webapp2.RequestHandler):
-    def get(self):
-        template = JINJA_ENVIRONMENT.get_template('register.html')
-        self.response.write(template.render())
-        
 class AboutUs(webapp2.RequestHandler):
     def get(self):
         template = JINJA_ENVIRONMENT.get_template('about_us.html')
         self.response.write(template.render())
 
+class RegisterHandler(webapp2.RequestHandler):
+    def get(self):
+        user = users.get_current_user()
+        user_query = Accounts.query(Accounts.user == user)
+        user_data = user_query.count()
+        if user_data >= 1:
+            self.redirect('/')
+        else:
+            template = JINJA_ENVIRONMENT.get_template('register.html')
+            self.response.write(template.render())
+    def post(self):
+        user_name = self.request.get('user_name')
+        user_query = Accounts.query()
+        # user_data = user_query.fetch()
+        ID = str(user_query.count())
+        user = users.get_current_user()
+        accounts = Accounts(user = user, user_name = user_name, ID=ID)
+        accounts.put()
+        template = JINJA_ENVIRONMENT.get_template('register.html')
+        self.response.write(template.render())
+        self.redirect('/')
+
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/add_song', AddSongHandler),
-    ('/register',RegisterHandler),
-    ('/about_us', AboutUs)
+    ('/about_us', AboutUs),
+    ('/register', RegisterHandler)
 
 ], debug=True)

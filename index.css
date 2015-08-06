@@ -128,7 +128,7 @@ h2 {
 }
 
 /* I'm guessing this is the Spotify Button to add songs */
-#add_song_button {
+.add_song_button {
   background: #649000;
   width: 100px;
   height: 30px;

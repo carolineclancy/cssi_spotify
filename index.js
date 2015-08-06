@@ -7,17 +7,18 @@ $(document).ready(function(){
       var input_item = String('#'+'key-'+id_number);
       var input_key = $(input_item).val();
       console.log(id_number);
+      var that = this;
       $.post("http://localhost:8080/", {"vote":1, "song_url_key":input_key} ,
         function(returnedData){
-            console.log('complete');
-            console.log(returnedData);
+          if(returnedData === "Vote Success"){
+            var votes = $(that).closest('tr').find('td.votes_column');
+            var count = parseInt(votes.html(),10)+1;
+            votes.html(count);
+          }
         }).fail(function(e) {
           console.log(e);
       });
 
-      var votes = $(this).closest('tr').find('td.votes_column');
-      var count = parseInt(votes.html(),10)+1;
-      votes.html(count);
 
 });
 
@@ -27,30 +28,19 @@ $(document).ready(function(){
         var id_number = event_id.substring(event_id.indexOf("#")+1);
         var input_item = String('#'+'key-'+id_number);
         var input_key = $(input_item).val();
+        var that = this;
         console.log(id_number);
         $.post("http://localhost:8080/", {"vote":-1, "song_url_key":input_key} ,
           function(returnedData){
-              console.log('complete');
+            if(returnedData === "Vote Success"){
+              var votes = $(that).closest('tr').find('td.votes_column');
+              var count = parseInt(votes.html(),10)-1;
+              votes.html(count);
+            }
               console.log(returnedData);
           }).fail(function(e) {
             console.log(e);
         });
-        var votes = $(this).closest('tr').find('td.votes_column');
-        var count = parseInt(votes.html(),10)-1;
-        votes.html(count);
       });
 
-    //   $(function(){
-    //       // don't cache ajax or content won't be fresh
-    //       $.ajaxSetup ({
-    //           cache: false
-    //       });
-    //       // load() functions
-    //       var loadUrl = "http://localhost:8080/";
-    //       $("#blank_space").click(function(){
-    //           $(".votes_of_song").load(loadUrl);
-    //       });
-    //
-    //   // end
-    // });
 });
