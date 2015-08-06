@@ -31,12 +31,15 @@
         About our Site
       </div>
     </div>
+    {% if user == None %}
+      <p> You must <a href="{{login}}">log in</a> to add a song </p>
+    {% else %}
       <form method="post">
         <div id="add_song_container">
           <div id="add_song_content">Song: <input required name="search_term" type="text"></div>
           <div><input class="add_song_button" type="submit" value="Add Song"></div>
         </div>
       </form>
-    </div>
+    {% endif %}
   </body>
 </html>

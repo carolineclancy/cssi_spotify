@@ -102,6 +102,11 @@ class MainHandler(webapp2.RequestHandler):
 
 class AddSongHandler(webapp2.RequestHandler):
     def get(self):
+        user = users.get_current_user()
+        login = ""
+        if user == None:
+            login = users.create_login_url('/register')
+
         search_term = self.request.get('search_term')
         search_q = search_term.replace(" ", "+")
         spotify_data_source = urlfetch.fetch("https://api.spotify.com/v1/search?q={}&type=track&limit=10".format(search_q))
@@ -110,7 +115,7 @@ class AddSongHandler(webapp2.RequestHandler):
         template = JINJA_ENVIRONMENT.get_template('add_song.html')
         iframes_var = []
 
-        self.response.write(template.render({'spotify':parsed_spotify_dictionary, 'iframes_var': iframes_var}))
+        self.response.write(template.render({'spotify':parsed_spotify_dictionary, 'iframes_var': iframes_var, 'user': user, 'login':login}))
     def post(self):
         search_term = self.request.get('search_term')
         search_q = search_term.replace(" ", "+")
