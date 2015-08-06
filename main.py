@@ -33,7 +33,7 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 class Accounts(ndb.Model):
     user = ndb.UserProperty(required=True)
     ID = ndb.StringProperty(required=True)
-    user_name = ndb.StringProperty(required=True)e
+    user_name = ndb.StringProperty(required=True)
 
 class AddSongs(ndb.Model):
     song_name = ndb.StringProperty(required=True)
