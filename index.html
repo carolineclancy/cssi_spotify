@@ -35,7 +35,8 @@
         About our Site
       </div>
     </div>
-    <a href="{{greeting}}"> {{greeting}} </a>
+
+      <a href="{{greeting}}"> {{greeting}} </a>
   <p hidden>
     {% for song_entry in songs %}
       {{iframes_var.append("{},".format(song_entry.iframe_id[14:]))}}
