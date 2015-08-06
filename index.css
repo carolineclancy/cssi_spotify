@@ -41,7 +41,7 @@ h2 {
 /* This is the container that holds the tabs of the navigation bar or basically the navigation bar. */
 #navbar {
   border: 1px #191919 solid;
-  margin: 10px 10px 10px 10px;
+  margin: 10px;
   padding: 0;
   width: 99%;
   height: 50px;
@@ -166,12 +166,13 @@ h2 {
 /* The invisible box holding the add song bar and submit button */
 #add_song_container {
   font-family:Courier;
-  margin-left: 12px;
+  margin-left: 96px 10px 10px 12px;
   background-color: #272727;
   width: 23%;
   padding: 10px;
   text-align: center;
   border-radius: 20px;
+  clear: both;
 }
 
 /* This is the song bar to add songs */
@@ -180,7 +181,7 @@ h2 {
 }
 
 /* I'm guessing this is the Spotify Button to add songs */
-.add_song_button {
+#add_song_button {
   background: #649000;
   width: 100px;
   height: 30px;
@@ -191,15 +192,46 @@ h2 {
   margin: 4px 0px 0px 15px;
 }
 
-.add_song_button:hover {
+#add_song_button:hover {
   background: #82BD03;
   cursor: pointer;
 }
 
-.add_song_button:focus {
+#add_song_button:focus {
   outline: 0;
 }
 
 #invisible_button{
   display: none;
+}
+
+.bio {
+  background-color: #272727;
+  margin: 100px 10px 8px 10px;
+  width: 98.5%;
+  height: 200px;
+  clear: both;
+  border-radius: 20px;
+}
+
+.other_bio {
+  background-color: #272727;
+  margin: 7.5px 10px 7.5px 10px;
+  width: 98.5%;
+  height: 200px;
+  clear: both;
+  border-radius: 20px;
+}
+
+.bio_pic {
+  margin: 10px;
+  width: 180px;
+  height: 180px;
+  border-radius: 100px;
+  float: left;
+}
+
+.bio_text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
 }
