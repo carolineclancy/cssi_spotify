@@ -5,15 +5,18 @@
 <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
  <link rel = "stylesheet" type = "text/css" href = "index.css">
   <head>
-    <title>Pick a song!</title>
+    <title>Jam</title>
     <link rel="shortcut icon" type="image/png" href="images/record.png"/>
   </head>
   <body>
+    <p id="header">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jam</p>
+    <div id="login_button">
+      Login | Register
+    </div>
     <!-- This is the navigation bar and all of its tabs -->
-    <p id="header">Jam</p>
     <div id="navbar">
       <a href="/">
-        <div class="tabs">
+        <div class="tabs_first">
           Home
         </div>
       </a>
@@ -27,11 +30,10 @@
           About Us
         </div>
       </a>
-      <div class="tabs">
-        About our Site&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <!-- Ignore this, these are just spaces to have this tab align with the voting column. -->
+      <div class="tabs_last">
+        About our Site
       </div>
     </div>
-
   <p hidden>
     {% for song_entry in songs %}
       {{iframes_var.append("{},".format(song_entry.iframe_id[14:]))}}

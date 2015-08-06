@@ -17,10 +17,25 @@ h2 {
 
 #header {
   font-size: 75px;
-  text-align: center;
   line-height: 0px;
-  margin-top: 50px;
-  margin-bottom: 50px;
+  margin: 37.5px 0px 37.5px 0px;
+  width: 74.5%;
+  float: left;
+  display: inline-block;
+  text-align: center;
+}
+
+#login_button {
+  padding: 35px 70px 35px 70px;
+  background-color: #474747;
+  color: black;
+  float:left;
+  margin: 0;
+  border: #191919 solid 1px;
+  height: 22px;
+  width: 14.4%;
+  text-align: center;
+  border-radius: 20px;
 }
 
 /* This is the container that holds the tabs of the navigation bar or basically the navigation bar. */
@@ -33,6 +48,19 @@ h2 {
 }
 
 /* These are the tabs for the navigation bar. */
+.tabs_first {
+  padding: 15px 70px 10px 70px;
+  background-color: #474747;
+  color: black;
+  float: left;
+  margin: 0;
+  border: #191919 solid 1px;
+  height: 25px;
+  width: 14.75%;
+  text-align: center;
+  border-radius: 20px 0px 0px 20px;
+}
+
 .tabs {
   padding: 15px 70px 10px 70px;
   background-color: #474747;
@@ -45,7 +73,30 @@ h2 {
   text-align: center;
 }
 
+.tabs_last {
+  padding: 15px 70px 10px 70px;
+  background-color: #474747;
+  color: black;
+  float: left;
+  margin: 0;
+  border: #191919 solid 1px;
+  height: 25px;
+  width: 14.75%;
+  text-align: center;
+  border-radius: 0px 20px 20px 0px;
+}
+
+.tabs_first:hover {
+  background-color: #004200;
+  color: #A0A09C;
+}
+
 .tabs:hover {
+  background-color: #004200;
+  color: #A0A09C;
+}
+
+.tabs_last:hover {
   background-color: #004200;
   color: #A0A09C;
 }
@@ -120,6 +171,7 @@ h2 {
   width: 23%;
   padding: 10px;
   text-align: center;
+  border-radius: 20px;
 }
 
 /* This is the song bar to add songs */
@@ -136,11 +188,16 @@ h2 {
   border: 0;
   font-family: 'Montserrat', sans-serif;
   color: white;
-  margin: 4px 0px 0px 30px;
+  margin: 4px 0px 0px 15px;
 }
 
 #add_song_button:hover {
   background: #82BD03;
+  cursor: pointer;
+}
+
+#add_song_button:focus {
+  outline: 0;
 }
 
 #invisible_button{

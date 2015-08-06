@@ -5,9 +5,20 @@
 <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
  <link rel = "stylesheet" type = "text/css" href = "index.css">
   <head>
-    <title>Pick a song!</title>
+    <title>Jam</title>
+    <link rel="shortcut icon" type="image/png" href="images/record.png"/>
   </head>
   <body>
-    <p>{{spotify}}</p>
+    {% set counter = 0 %}
+  <form method="post">
+  {% for song in spotify["tracks"]["items"] %}
+    <input name="song_choice" type="radio" value="{{spotify["tracks"]["items"][counter]}}"><iframe src="{{"https://embed.spotify.com/?uri=spotify:track:{}".format(song["uri"])}}" width="300" height="80" frameborder="0" allowtransparency="true"></iframe></input>
+    <br>
+    {% set counter = counter + 1 %}
+  {% endfor %}
+    <input type="submit"></input>
+  </form>
+
+
   </body>
 </html>
