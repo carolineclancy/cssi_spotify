@@ -35,7 +35,12 @@ class Accounts(ndb.Model):
     user = ndb.UserProperty(required=True)
     ID = ndb.StringProperty(required=True)
     user_name = ndb.StringProperty(required=True)
+    voted = ndb.StringProperty()
 
+class UserVotes(ndb.Model):
+    song_key = ndb.StringProperty(required=True)
+    user_ID = ndb.StringProperty(required=True)
+    vote_type = ndb.IntegerProperty(required=True)
 
 class AddSongs(ndb.Model):
     song_name = ndb.StringProperty(required=True)
@@ -47,67 +52,92 @@ class AddSongs(ndb.Model):
     date = ndb.DateTimeProperty(auto_now_add=True)
 
 
-
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-
         #login
         user = users.get_current_user()
         logout = ""
         login = ""
-
         if user:
             logout = ("{}").format(users.create_logout_url('/logout'))
             q = ndb.gql('SELECT * FROM Accounts WHERE ID = :1', user.user_id())
         else:
             login = users.create_login_url('/woohoo')
 
-
         #get database songs
         entry_query = AddSongs.query().order(-AddSongs.votes_of_song)
-
         entry_data = entry_query.fetch()
+
         #spotify
         # searches spotify for the song a user searched
         spotify_data_source = urlfetch.fetch("https://api.spotify.com/v1/search?q={}&type=track&limit=10".format(AddSongs.search_q))
         spotify_json_content = spotify_data_source.content
         parsed_spotify_dictionary = json.loads(spotify_json_content)
-
+        #renders template
         iframes_var = []
-
         template = JINJA_ENVIRONMENT.get_template('index.html')
         self.response.write(template.render({'songs':entry_data, 'spotify':parsed_spotify_dictionary, 'iframes_var':iframes_var, 'logout': logout, "login": login}))
 
     def post(self):
+        #check loggin system
         user = users.get_current_user()
         if user == None:
             self.response.out.write("Vote Failed")
             return
-        self.response.out.write('Vote Success')
+        print user
+        #gets account ID
+        account_query = Accounts.query()
+        account_filter = account_query.filter(Accounts.user == user)
+        account_ID = account_filter.fetch() #gets ID for account
+        account_ID = account_ID[0].ID
+
         #voting system
         song_vote_count = self.request.get('vote')
         song_url_key = self.request.get('song_url_key')
-        song_key = ndb.Key(urlsafe=song_url_key)
+        song_key = ndb.Key(urlsafe=song_url_key) #get song key
         song = song_key.get()
-        song.votes_of_song = song.votes_of_song +  int(song_vote_count)
-        song.put()
+        vote_query = UserVotes.query()
+        vote_filter = vote_query.filter(UserVotes.song_key == song_url_key).filter(UserVotes.user_ID == str(account_ID))
+        vote_data = vote_filter.fetch()
+        vote_data_length = len(vote_data)
+        print vote_data
+        if vote_data_length == 0:
+            song.votes_of_song = song.votes_of_song + int(song_vote_count)
+            song.put()
+            new_voter = UserVotes(song_key=song_url_key, user_ID=account_ID, vote_type=int(song_vote_count))
+            new_voter.put()
+            print new_voter
+        else:
+            previous_vote = vote_data[0].vote_type
+            if previous_vote == int(song_vote_count):
+                self.response.out.write('Double Vote Failed')
+                return
+            vote_data[0].vote_type += int(song_vote_count)
+            vote_data[0].put()
+
         #spotify
         spotify_data_source = urlfetch.fetch("https://api.spotify.com/v1/search?q={}&type=track&limit=10".format(AddSongs.search_q))
         spotify_json_content = spotify_data_source.content
         parsed_spotify_dictionary = json.loads(spotify_json_content)
-        template = JINJA_ENVIRONMENT.get_template('index.html')
-        iframes_var = []
 
-        self.response.write(template.render({'spotify':parsed_spotify_dictionary, 'iframes_var':iframes_var}))
-        self.redirect('/')
+        #limit each vote to 1
+        self.response.out.write('Vote Success')
+
+        #render template
+        # template = JINJA_ENVIRONMENT.get_template('index.html')
+        # iframes_var = []
+        # self.response.write(template.render({'spotify':parsed_spotify_dictionary, 'iframes_var':iframes_var}))
+        # self.redirect('/')
 
 class AddSongHandler(webapp2.RequestHandler):
     def get(self):
+        #check loggin
         user = users.get_current_user()
         login = ""
         if user == None:
             login = users.create_login_url('/register')
 
+        #serach for song
         search_term = self.request.get('search_term')
         search_q = search_term.replace(" ", "+")
         spotify_data_source = urlfetch.fetch("https://api.spotify.com/v1/search?q={}&type=track&limit=10".format(search_q))
