@@ -135,7 +135,7 @@ class AddSongHandler(webapp2.RequestHandler):
         user = users.get_current_user()
         login = ""
         if user == None:
-            login = users.create_login_url()
+            login = users.create_login_url('/woohoo')
 
         #serach for song
         search_term = self.request.get('search_term')
