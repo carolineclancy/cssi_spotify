@@ -266,3 +266,21 @@ h2 {
   height: 25px;
   padding: 0px 5px 25px 5px;
 }
+
+.about_jam_container {
+  background-color: #272727;
+  margin: 8px 10px 8px 10px;
+  width: 98.5%;
+  height: 500px;
+  clear: both;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.about_jam_text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 24px;
+  padding: 20px 0px;
+  vertical-align: middle;
+  display: block;
+}
