@@ -60,7 +60,7 @@ class MainHandler(webapp2.RequestHandler):
             logout = ("{}").format(users.create_logout_url('/logout'))
             q = ndb.gql('SELECT * FROM Accounts WHERE ID = :1', user.user_id())
         else:
-            login = users.create_login_url('/register')
+            login = users.create_login_url('/woohoo')
 
 
         #get database songs
@@ -198,27 +198,27 @@ class ChooseSongHandler(webapp2.RequestHandler):
         template = JINJA_ENVIRONMENT.get_template('index.html')
         self.response.write(template.render({'spotify':parsed_spotify_dictionary, 'iframes_var':iframes_var, 'song_choice':song_choice}))
         self.redirect('/')
-class RegisterHandler(webapp2.RequestHandler):
-    def get(self):
-        user = users.get_current_user()
-        user_query = Accounts.query(Accounts.user == user)
-        user_data = user_query.count()
-        if user_data >= 1:
-            self.redirect('/woohoo')
-        else:
-            template = JINJA_ENVIRONMENT.get_template('register.html')
-            self.response.write(template.render())
-    def post(self):
-        user_name = self.request.get('user_name')
-        user_query = Accounts.query()
-        # user_data = user_query.fetch()
-        ID = str(user_query.count())
-        user = users.get_current_user()
-        accounts = Accounts(user = user, user_name = user_name, ID=ID)
-        accounts.put()
-        template = JINJA_ENVIRONMENT.get_template('register.html')
-        self.response.write(template.render())
-        self.redirect('/woohoo')
+# class RegisterHandler(webapp2.RequestHandler):
+#     def get(self):
+#         user = users.get_current_user()
+#         user_query = Accounts.query(Accounts.user == user)
+#         user_data = user_query.count()
+#         if user_data >= 1:
+#             self.redirect('/woohoo')
+#         else:
+#             template = JINJA_ENVIRONMENT.get_template('register.html')
+#             self.response.write(template.render())
+#     def post(self):
+#         user_name = self.request.get('user_name')
+#         user_query = Accounts.query()
+#         # user_data = user_query.fetch()
+#         ID = str(user_query.count())
+#         user = users.get_current_user()
+#         accounts = Accounts(user = user, user_name = user_name, ID=ID)
+#         accounts.put()
+#         template = JINJA_ENVIRONMENT.get_template('register.html')
+#         self.response.write(template.render())
+#         self.redirect('/woohoo')
 
 class AboutUs(webapp2.RequestHandler):
     def get(self):
@@ -246,7 +246,7 @@ app = webapp2.WSGIApplication([
     ('/add_song', AddSongHandler),
     ('/choose', ChooseSongHandler),
     ('/about_us', AboutUs),
-    ('/register', RegisterHandler),
+    # ('/register', RegisterHandler),
     ('/woohoo', WooHoo),
     ('/logout', Logout),
     ('/about_jam', AboutJam)
